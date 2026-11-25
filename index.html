@@ -90,9 +90,7 @@ function render(open){
   var grid=el('div','hub-grid');
   (site?site.options:sites).forEach(function(s,i){grid.appendChild(card(s,function(){render(i);window.scrollTo(0,0)}))});
   g.appendChild(grid);app.appendChild(g);
-  var c=el('div','hub-group');c.appendChild(el('p','label','التواصل'));var cc=el('div','hub-contact');cc.appendChild(el('span',null,'للتواصل مع عمر:'));var ph=el('a',null,'+201272714209');ph.href='tel:+201272714209';cc.appendChild(ph);c.appendChild(cc);
   if(!site){var n=el('div','note');n.appendChild(el('b',null,'إزاي تضيف موقع جديد'));n.appendChild(el('span',null,'افتح ملف index.html وانسخ سطر من القايمة اللي اسمها sites وغيّر الاسم والرابط.'));app.appendChild(n)}
-  app.appendChild(c);
 }
 var __ac=null;
 function hubClick(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!__ac)__ac=new C();if(__ac.resume)__ac.resume();var t=__ac.currentTime,o=__ac.createOscillator(),g=__ac.createGain();o.type='sine';o.frequency.setValueAtTime(900,t);o.frequency.exponentialRampToValueAtTime(450,t+0.08);g.gain.setValueAtTime(0.18,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.12);o.connect(g);g.connect(__ac.destination);o.start(t);o.stop(t+0.13);document.documentElement.setAttribute('data-hub-audio',__ac.state)}catch(e){document.documentElement.setAttribute('data-hub-err',String(e))}}
