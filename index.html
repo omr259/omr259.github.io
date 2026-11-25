@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1e1b4b">
+<title>كل مواقعي في مكان واحد</title>
+<style>
+:root { --ds-page: transparent; }
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,"Noto Sans Arabic","Noto Naskh Arabic",Arial,sans-serif;font-size:15px;line-height:1.6;color:#fff}
+.app{max-width:1040px;margin:0 auto;padding:24px}
+h1{font-weight:400;font-size:30px;line-height:1.3;margin:16px 0 8px}
+.fact{color:rgba(255,255,255,.78);margin:0 0 20px}
+.intro{margin:0 0 28px}
+.label{color:rgba(255,255,255,.78);margin:0 0 12px}
+.note{border-inline-start:3px solid rgba(255,255,255,.3);padding:4px 16px;margin:32px 0}
+.note b{display:block;margin-bottom:4px}
+.closing{color:rgba(255,255,255,.78);margin:32px 0 8px}
+.hub-group{display:flex;flex-direction:column}
+.hub-group+.hub-group,.note+.hub-group{margin-top:28px}
+html, body, #root { margin: 0; min-height: 100%; }
+body { background: var(--ds-page); }
+.file-nav { display: flex; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid var(--ds-hairline); }
+.file-nav a { padding: 10px 0; color: var(--ds-ink-2); text-decoration: none; }
+.file-nav a[aria-current="page"] { color: var(--ds-ink); box-shadow: inset 0 -1px 0 var(--ds-ink); }
+@media (max-width: 600px) { .file-nav a { display: inline-flex; align-items: center; min-height: 44px; } }
+html, body { min-height: 100%; }
+:root { --ds-page: transparent; --ds-ink: #ffffff; --ds-ink-2: rgba(255,255,255,.78); --ds-hairline: rgba(255,255,255,.18); --ds-raised: rgba(255,255,255,.12); }
+body { background: radial-gradient(circle at 85% 0%, #14b8a6 0, transparent 45%), radial-gradient(circle at 0% 100%, #f59e0b 0, transparent 45%), linear-gradient(160deg, #04201f, #0b3b3a 55%, #134e4a); background-attachment: fixed; background-color: #04201f; }
+@keyframes hub-pop { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+.hub-card { animation: hub-pop .45s ease-out both; transition: transform .15s ease, box-shadow .15s ease; -webkit-tap-highlight-color: transparent; }
+.hub-card:nth-child(2) { animation-delay: .08s; } .hub-card:nth-child(3) { animation-delay: .16s; }
+.hub-card.is-live:active { transform: scale(.94); box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.hub-back:active { transform: scale(.94); }
+@media (prefers-reduced-motion: reduce) { .hub-card { animation: none; } }
+.hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hub-card { display: flex; flex-direction: column; gap: 4px; min-height: 160px; padding: 16px; border: 0; border-radius: 20px; color: #fff; text-decoration: none; background: var(--c); box-sizing: border-box; text-align: start; font: inherit; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,.14); }
+.hub-icon { font-size: 34px; line-height: 44px; }
+.hub-name { font-weight: 600; font-size: 17px; }
+.hub-desc { opacity: .92; }
+.hub-go { margin-top: auto; padding-top: 8px; font-weight: 600; }
+.hub-card.is-soon { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); box-shadow: none; border: 2px dashed rgba(255,255,255,.35); cursor: default; }
+.hub-card.is-soon .hub-icon { filter: grayscale(1); opacity: .6; }
+.hub-back { align-self: flex-start; width: fit-content; display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 8px; padding: 0 16px; border: 0; border-radius: 22px; background: #fff; color: #1e1b4b; font: inherit; font-weight: 600; cursor: pointer; }
+@media (min-width: 768px) { .hub-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 340px) { .hub-grid { grid-template-columns: 1fr; } }
+
+.hub-by { margin: 0 0 4px; color: rgba(255,255,255,.85); font-size: 13px; }
+.hub-contact { display: flex; flex-direction: column; gap: 6px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); }
+.hub-contact a { color: #fff; font-weight: 600; font-size: 18px; text-decoration: none; direction: ltr; text-align: start; }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+var sites = [{"name":"موقع الشحن","desc":"اشحن ألعابك","icon":"⚡","color":"#e8590c","link":"","options":[{"name":"شحن فري فاير","desc":"شحن جواهر فري فاير من Shop2Game","icon":"💎","color":"#f08c00","link":"https://shop2game.com/"},{"name":"شحن ببجي","desc":"شحن UC من Midasbuy","icon":"🔫","color":"#2f9e44","link":"https://www.midasbuy.com/"},{"name":"Steam","desc":"رصيد وألعاب ستيم","icon":"🕹️","color":"#1864ab","link":"https://store.steampowered.com/"},{"name":"Razer Gold","desc":"رصيد ألعاب من ريزر","icon":"🐍","color":"#2b8a3e","link":"https://www.razer.com/gold"},{"name":"لعبة تانية","desc":"هتتضاف بعدين","icon":"🎮","color":"#7048e8","link":""}]},{"name":"أخبار","desc":"مواقع أخبار عربية","icon":"📰","color":"#0b7285","link":"","options":[{"name":"BBC عربي","desc":"أخبار بي بي سي","icon":"🌍","color":"#c92a2a","link":"https://www.bbc.com/arabic"},{"name":"الجزيرة","desc":"الجزيرة نت","icon":"📡","color":"#e67700","link":"https://www.aljazeera.net/"},{"name":"اليوم السابع","desc":"أخبار مصر","icon":"🗞️","color":"#1971c2","link":"https://www.youm7.com/"},{"name":"المصري اليوم","desc":"أخبار مصر","icon":"📰","color":"#5f3dc4","link":"https://www.almasryalyoum.com/"},{"name":"الشروق","desc":"بوابة الشروق","icon":"🌅","color":"#d9480f","link":"https://www.shorouknews.com/"},{"name":"سكاي نيوز عربية","desc":"أخبار عاجلة","icon":"⚡","color":"#0c8599","link":"https://www.skynewsarabia.com/"}]},{"name":"أفلام","desc":"مواقع مشاهدة قانونية","icon":"🎬","color":"#d6336c","link":"","options":[{"name":"Watch It","desc":"مسلسلات وأفلام مصرية","icon":"📺","color":"#e03131","link":"https://watchit.com/"},{"name":"شاهد","desc":"MBC شاهد","icon":"🍿","color":"#1c7ed6","link":"https://shahid.mbc.net/"},{"name":"Netflix","desc":"أفلام ومسلسلات","icon":"🎞️","color":"#b02a37","link":"https://www.netflix.com/"},{"name":"YouTube أفلام","desc":"أفلام للمشاهدة","icon":"▶️","color":"#f03e3e","link":"https://www.youtube.com/movies"}]},{"name":"ألعاب","desc":"ألعاب مجانية أونلاين","icon":"🎮","color":"#7048e8","link":"","options":[{"name":"Poki","desc":"ألعاب مجانية","icon":"🕹️","color":"#1c7ed6","link":"https://poki.com/"},{"name":"CrazyGames","desc":"ألعاب مجانية","icon":"🤪","color":"#7048e8","link":"https://www.crazygames.com/"},{"name":"Y8","desc":"ألعاب فلاش وأونلاين","icon":"🎯","color":"#e8590c","link":"https://www.y8.com/"},{"name":"Miniclip","desc":"ألعاب مشهورة","icon":"🏓","color":"#c2255c","link":"https://www.miniclip.com/"},{"name":"itch.io","desc":"ألعاب مستقلة مجانية","icon":"👾","color":"#fa5252","link":"https://itch.io/games/free"}]},{"name":"مذاكرة","desc":"مواقع تعليم","icon":"📚","color":"#2b8a3e","link":"","options":[{"name":"Khan Academy","desc":"دروس بالعربي","icon":"🎓","color":"#2f9e44","link":"https://ar.khanacademy.org/"},{"name":"ويكيبيديا","desc":"الموسوعة بالعربي","icon":"📖","color":"#495057","link":"https://ar.wikipedia.org/"}]},{"name":"موسيقى","desc":"اسمع أغاني","icon":"🎧","color":"#9c36b5","link":"","options":[{"name":"YouTube Music","desc":"أغاني وكليبات","icon":"🎵","color":"#e03131","link":"https://music.youtube.com/"},{"name":"Spotify","desc":"أغاني وبودكاست","icon":"🟢","color":"#2b8a3e","link":"https://open.spotify.com/"},{"name":"أنغامي","desc":"أغاني عربي","icon":"🎶","color":"#7048e8","link":"https://www.anghami.com/"}]},{"name":"أدوات","desc":"أدوات مفيدة","icon":"🧰","color":"#1971c2","link":"","options":[{"name":"ترجمة جوجل","desc":"ترجم أي نص","icon":"🌐","color":"#1c7ed6","link":"https://translate.google.com/"},{"name":"Canva","desc":"تصميم صور وبوسترات","icon":"🎨","color":"#0c8599","link":"https://www.canva.com/"},{"name":"remove.bg","desc":"شيل خلفية الصورة","icon":"✂️","color":"#5f3dc4","link":"https://www.remove.bg/"}]},{"name":"مواقع عمر","desc":"مواقع من تصميم عمر","icon":"🦊","color":"#c2410c","link":"","intro":"تم تصميم هذه المواقع من قبل عمر ابراهيم محمد","options":[{"name":"موقع عمر","desc":"افتح الموقع","icon":"🦊","color":"#ea580c","link":"https://fox-9b261.web.app/home.html"}]},{"name":"المتجر","desc":"اطلب منتجاتك","icon":"🛍️","color":"#0c8599","link":""},{"name":"موقع تاني","desc":"هيتضاف بعدين","icon":"🌐","color":"#2f9e44","link":""}];
+var app = document.getElementById('app');
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function card(s,onOpen){
+  var live = s.options || s.link, e;
+  if (s.options){e=el('button','hub-card is-live');e.type='button';e.onclick=onOpen}
+  else if (s.link){e=el('a','hub-card is-live');e.href=s.link;e.target='_blank';e.rel='noopener noreferrer'}
+  else {e=el('div','hub-card is-soon')}
+  e.style.setProperty('--c',s.color);
+  e.appendChild(el('span','hub-icon',s.icon));
+  e.appendChild(el('span','hub-name',s.name));
+  e.appendChild(el('span','hub-desc',s.desc));
+  e.appendChild(el('span','hub-go',s.options?'افتح الخيارات \u2190':s.link?'افتح الموقع \u2190':'قريبًا'));
+  return e;
+}
+function render(open){
+  app.innerHTML='';
+  var site = open==null?null:sites[open];
+  app.appendChild(el('p','hub-by','تم التطوير بواسطة عمر ابراهيم محمد'));
+  app.appendChild(el('h1',null,site?site.name:'كل مواقعي في مكان واحد'));
+  app.appendChild(el('p','fact',site?(site.options.length===1?'خيار واحد':site.options.length+' خيارات'):sites.length+' مواقع'));
+  app.appendChild(el('p','intro',site?(site.intro||'اختار اللي عايزه.'):'دوس على أي مربع يفتحلك الموقع.'));
+  var g=el('div','hub-group');
+  g.appendChild(el('p','label',site?'الخيارات':'المواقع'));
+  if(site){var b=el('button','hub-back','\u2192 رجوع');b.type='button';b.onclick=function(){render(null);window.scrollTo(0,0)};g.appendChild(b)}
+  var grid=el('div','hub-grid');
+  (site?site.options:sites).forEach(function(s,i){grid.appendChild(card(s,function(){render(i);window.scrollTo(0,0)}))});
+  g.appendChild(grid);app.appendChild(g);
+  var c=el('div','hub-group');c.appendChild(el('p','label','التواصل'));var cc=el('div','hub-contact');cc.appendChild(el('span',null,'للتواصل مع عمر:'));var ph=el('a',null,'+201272714209');ph.href='tel:+201272714209';cc.appendChild(ph);c.appendChild(cc);
+  if(!site){var n=el('div','note');n.appendChild(el('b',null,'إزاي تضيف موقع جديد'));n.appendChild(el('span',null,'افتح ملف index.html وانسخ سطر من القايمة اللي اسمها sites وغيّر الاسم والرابط.'));app.appendChild(n)}
+  app.appendChild(c);
+}
+var __ac=null;
+function hubClick(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!__ac)__ac=new C();if(__ac.resume)__ac.resume();var t=__ac.currentTime,o=__ac.createOscillator(),g=__ac.createGain();o.type='sine';o.frequency.setValueAtTime(900,t);o.frequency.exponentialRampToValueAtTime(450,t+0.08);g.gain.setValueAtTime(0.18,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.12);o.connect(g);g.connect(__ac.destination);o.start(t);o.stop(t+0.13);document.documentElement.setAttribute('data-hub-audio',__ac.state)}catch(e){document.documentElement.setAttribute('data-hub-err',String(e))}}
+document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('.hub-card.is-live,.hub-back'))hubClick()},true);
+render(null);
+</script>
+</body>
+</html>
