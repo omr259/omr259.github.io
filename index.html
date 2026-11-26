@@ -105,14 +105,19 @@ body { background: linear-gradient(160deg, #111111, #1c1c1c 55%, #292929); backg
 .hub-contact-title{font-size:24px;margin:0 0 8px;color:#fff}.hub-contact-links{gap:14px}
 .hub-contact-link{min-height:108px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.16);transition:transform .2s,border-color .2s}
 .hub-contact-link:hover{transform:translateY(-3px);border-color:rgba(107,210,193,.65)}.hub-contact-link svg{width:32px;height:32px}
-.hub-game{margin:28px 0 24px;padding:24px;border-radius:28px;background:linear-gradient(145deg,#173a3b,#1c2d42 58%,#26363c);border:1px solid rgba(95,201,177,.42);box-shadow:0 18px 46px rgba(0,0,0,.35);text-align:center}
-.hub-game .hub-game-mark{font-size:48px;line-height:1;margin-bottom:8px}.hub-game h2{margin:0 0 8px;font-size:27px;color:#fff}
-.hub-game p{margin:0 0 12px;color:rgba(255,255,255,.76);line-height:1.75}.hub-game-stats{display:flex;justify-content:center;gap:24px;margin:12px 0 16px;font-weight:700}
-.hub-game-area{position:relative;height:260px;max-width:760px;margin:0 auto 16px;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.18);background:radial-gradient(ellipse at 50% 10%,rgba(78,161,145,.24),transparent 66%),rgba(8,18,24,.58)}
-.hub-game-target{position:absolute;width:54px;height:54px;border:2px solid rgba(255,255,255,.9);border-radius:50%;background:linear-gradient(145deg,#ffd66f,#f08a3c);font-size:28px;cursor:pointer;box-shadow:0 6px 18px rgba(255,178,52,.32);touch-action:manipulation}
-.hub-game-target:active{transform:scale(.9)}.hub-game-start{border:0;border-radius:14px;padding:12px 18px;background:linear-gradient(110deg,#167f78,#2369a5);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
-.hub-game-hint{font-size:14px!important;margin:10px 0 0!important}
-@media(max-width:500px){.hub-contact,.hub-game{padding:17px;border-radius:22px}.hub-contact-title{font-size:21px}.hub-game-area{height:220px}.hub-game-stats{gap:14px;font-size:14px}}
+
+.hub-chill{position:relative;isolation:isolate;overflow:hidden;margin:28px 0 24px;padding:24px 22px;border-radius:26px;background:linear-gradient(130deg,#142b2d,#182b3b 55%,#202c32);border:1px solid rgba(111,191,177,.28);box-shadow:0 14px 38px rgba(0,0,0,.24);text-align:center}
+.hub-chill:before{content:"";position:absolute;z-index:-1;width:220px;height:220px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(85,183,162,.18),rgba(54,126,153,.08) 42%,transparent 72%);filter:blur(8px);transition:transform 1.1s ease,opacity 1.1s ease;opacity:.75}
+.hub-chill.is-glowing:before{transform:translate(-50%,-50%) scale(1.6);opacity:1}
+.hub-chill h2{margin:0 0 5px;font-size:23px;color:#f4f1e9}.hub-chill p{margin:0 auto 14px;max-width:500px;color:rgba(255,255,255,.72);line-height:1.8}
+.hub-chill-action{min-height:46px;padding:10px 19px;border:1px solid rgba(142,205,188,.4);border-radius:999px;background:rgba(232,239,231,.08);color:#eff4ee;font:inherit;font-weight:700;cursor:pointer;transition:background .25s,transform .25s,border-color .25s;touch-action:manipulation}
+.hub-chill-action:hover{background:rgba(117,184,165,.17);border-color:rgba(142,205,188,.72);transform:translateY(-1px)}
+.hub-chill-action:focus-visible{outline:2px solid #d4c18c;outline-offset:3px}
+.hub-chill-ripple{position:absolute;left:50%;top:50%;width:36px;height:36px;border:1px solid rgba(160,218,194,.55);border-radius:50%;transform:translate(-50%,-50%) scale(.25);opacity:0;pointer-events:none}
+.hub-chill.is-glowing .hub-chill-ripple{animation:chillRipple 1.4s ease-out both}
+@keyframes chillRipple{0%{transform:translate(-50%,-50%) scale(.35);opacity:.5}100%{transform:translate(-50%,-50%) scale(5.2);opacity:0}}
+@media(max-width:500px){.hub-contact,.hub-chill{padding:18px;border-radius:22px}.hub-chill h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.hub-chill:before,.hub-chill-action{transition:none}.hub-chill.is-glowing .hub-chill-ripple{animation:none}}
 
 
 .hub-grid{width:100%;min-width:0}
@@ -174,23 +179,16 @@ function hubClick(){try{var C=window.AudioContext||window.webkitAudioContext;if(
 document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('.hub-card.is-live,.hub-back'))hubClick()},true);
 render(null);
 
+
 (function(){
  var contact=document.querySelector('.hub-contact');if(!contact)return;
- var game=document.createElement('section');game.className='hub-game';game.setAttribute('aria-label','لعبة اصطياد النجمة');
- var mark=document.createElement('div');mark.className='hub-game-mark';mark.textContent='🌟';game.appendChild(mark);
- var heading=document.createElement('h2');heading.textContent='تحدي اصطياد النجمة';game.appendChild(heading);
- var desc=document.createElement('p');desc.textContent='اضغط النجمة بأسرع ما تقدر خلال 20 ثانية. لعبة صغيرة من تصميم الصفحة.';game.appendChild(desc);
- var stats=document.createElement('div');stats.className='hub-game-stats';var scoreEl=document.createElement('div');var timeEl=document.createElement('div');stats.appendChild(scoreEl);stats.appendChild(timeEl);game.appendChild(stats);
- var area=document.createElement('div');area.className='hub-game-area';area.setAttribute('role','application');area.setAttribute('aria-label','مساحة اللعب');game.appendChild(area);
- var target=document.createElement('button');target.type='button';target.className='hub-game-target';target.textContent='★';target.setAttribute('aria-label','اضغط النجمة');target.hidden=false;target.style.left='calc(50% - 27px)';target.style.top='calc(50% - 27px)';area.appendChild(target);
- var start=document.createElement('button');start.type='button';start.className='hub-game-start';start.textContent='ابدأ اللعب';game.appendChild(start);
- var hint=document.createElement('p');hint.className='hub-game-hint';hint.textContent='النتيجة بتتحسب على جهازك فقط.';game.appendChild(hint);
- var score=0,remaining=20,timer=null;
- function place(){var maxX=Math.max(0,area.clientWidth-58),maxY=Math.max(0,area.clientHeight-58);target.style.left=Math.floor(Math.random()*(maxX+1))+'px';target.style.top=Math.floor(Math.random()*(maxY+1))+'px'}
- function finish(){clearInterval(timer);timer=null;target.hidden=true;start.disabled=false;start.textContent='العب تاني';hint.textContent='خلص الوقت! نتيجتك: '+score+' نجمة. اضغط للعب مرة تانية.'}
- function update(){scoreEl.textContent='النجوم: '+score;timeEl.textContent='الوقت: '+remaining+' ث'}
- start.addEventListener('click',function(){clearInterval(timer);score=0;remaining=20;start.disabled=true;target.hidden=false;hint.textContent='يلا بسرعة!';update();place();timer=setInterval(function(){remaining--;update();if(remaining<=0)finish()},1000)});
- target.addEventListener('click',function(){if(!timer)return;score++;update();place()});contact.insertAdjacentElement('afterend',game);update();
+ var panel=document.createElement('section');panel.className='hub-chill';panel.setAttribute('aria-label','لمسة روقان');
+ var ring=document.createElement('span');ring.className='hub-chill-ripple';ring.setAttribute('aria-hidden','true');panel.appendChild(ring);
+ var title=document.createElement('h2');title.textContent='تحب تجرب ؟';panel.appendChild(title);
+ var text=document.createElement('p');text.textContent='واثق في نفسك اوي';panel.appendChild(text);
+ var button=document.createElement('button');button.type='button';button.className='hub-chill-action';button.textContent='لمسة هدوء';button.setAttribute('aria-label','شغّل تأثير هدوء بسيط');panel.appendChild(button);
+ button.addEventListener('click',function(){panel.classList.remove('is-glowing');void panel.offsetWidth;panel.classList.add('is-glowing');window.setTimeout(function(){panel.classList.remove('is-glowing')},1450)});
+ contact.insertAdjacentElement('afterend',panel);
 })();
 </script>
 </body>
