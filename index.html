@@ -128,6 +128,13 @@ body { background: linear-gradient(160deg, #111111, #1c1c1c 55%, #292929); backg
 .hub-grid>.hub-wide .hub-wdesc,.hub-grid>.hub-wide .hub-wgo{display:block;line-height:1.4;white-space:normal}
 @media(max-width:600px){.hub-grid>.hub-wide{min-height:116px!important;padding:16px 20px!important;gap:12px!important}.hub-grid>.hub-wide .hub-icon{flex-basis:40px;min-width:40px;font-size:34px!important}.hub-grid>.hub-wide .hub-wname{font-size:22px}}
 
+
+@keyframes hub-bg-drift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+body{background:linear-gradient(150deg,#111 0%,#191c1d 36%,#1e2627 68%,#242424 100%);background-size:180% 180%;animation:hub-bg-drift 24s ease-in-out infinite}
+.hub-chill{animation:hub-pop .7s cubic-bezier(.2,.75,.25,1) .18s both;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.hub-chill:hover{transform:translateY(-2px);border-color:rgba(111,191,177,.5);box-shadow:0 18px 42px rgba(0,0,0,.3)}
+@media(prefers-reduced-motion:reduce){body{animation:none;background-size:auto}.hub-chill{animation:none;transition:none}}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
 </head>
@@ -182,11 +189,11 @@ render(null);
 
 (function(){
  var contact=document.querySelector('.hub-contact');if(!contact)return;
- var panel=document.createElement('section');panel.className='hub-chill';panel.setAttribute('aria-label','');
+ var panel=document.createElement('section');panel.className='hub-chill';panel.setAttribute('aria-label','محبوس ضليمه');
  var ring=document.createElement('span');ring.className='hub-chill-ripple';ring.setAttribute('aria-hidden','true');panel.appendChild(ring);
- var title=document.createElement('h2');title.textContent='اي رايك في الموقع';panel.appendChild(title);
- var text=document.createElement('p');text.textContent'محبوس ضليمه';panel.appendChild(text);
- var button=document.createElement('button');button.type='button';button.className='hub-chill-action';button.textContent='جرب تدوس';button.setAttribute('aria-label','شغّل تأثير هدوء بسيط');panel.appendChild(button);
+ var title=document.createElement('h2');title.textContent='محبوس ضليمه';panel.appendChild(title);
+ var text=document.createElement('p');text.textContent='خد نفس هادي، وسيب الدنيا تهدى شوية.';panel.appendChild(text);
+ var button=document.createElement('button');button.type='button';button.className='hub-chill-action';button.textContent='لمسة هدوء';button.setAttribute('aria-label','شغّل تأثير هدوء بسيط');panel.appendChild(button);
  button.addEventListener('click',function(){panel.classList.remove('is-glowing');void panel.offsetWidth;panel.classList.add('is-glowing');window.setTimeout(function(){panel.classList.remove('is-glowing')},1450)});
  contact.insertAdjacentElement('afterend',panel);
 })();
