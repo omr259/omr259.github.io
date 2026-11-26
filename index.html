@@ -36,7 +36,7 @@ body { background: linear-gradient(160deg, #111111, #1c1c1c 55%, #292929); backg
 .hub-card.is-live:hover::after { animation:hub-shine .7s ease-out; }
 .hub-card.is-live:active { transform:translateY(-1px) scale(.98); filter:brightness(1.14); box-shadow:0 5px 12px rgba(0,0,0,.28); }
 
-/* Distinct soft-cut organic silhouettes */
+/* Organic silhouettes shared by home cards and inner option cards */
 .hub-grid>.hub-card:not(.hub-wide){text-align:center;align-items:center;padding:18px 30px;min-height:168px}
 .hub-grid>.hub-card:not(.hub-wide):nth-child(2){border-radius:64% 36% 27% 73% / 35% 24% 76% 65%;transform:rotate(-1.2deg)}
 .hub-grid>.hub-card:not(.hub-wide):nth-child(3){border-radius:31% 69% 66% 34% / 51% 27% 73% 49%;transform:rotate(1deg)}
@@ -50,6 +50,17 @@ body { background: linear-gradient(160deg, #111111, #1c1c1c 55%, #292929); backg
 .hub-grid>.hub-card:not(.hub-wide):nth-child(11){border-radius:39% 61% 70% 30% / 64% 38% 62% 36%;transform:rotate(.7deg)}
 .hub-grid>.hub-card:not(.hub-wide) .hub-go{margin-top:auto}
 .hub-card.is-soon{filter:brightness(.78)}
+
+.hub-group .hub-grid>.hub-card:nth-child(1){border-radius:64% 36% 27% 73% / 35% 24% 76% 65%;transform:rotate(-1.2deg)}
+.hub-group .hub-grid>.hub-card:nth-child(2){border-radius:31% 69% 66% 34% / 51% 27% 73% 49%;transform:rotate(1deg)}
+.hub-group .hub-grid>.hub-card:nth-child(3){border-radius:70% 30% 42% 58% / 24% 52% 48% 76%;transform:rotate(-.7deg)}
+.hub-group .hub-grid>.hub-card:nth-child(4){border-radius:43% 57% 24% 76% / 60% 31% 69% 40%;transform:rotate(1.3deg)}
+.hub-group .hub-grid>.hub-card:nth-child(5){border-radius:26% 74% 57% 43% / 42% 68% 32% 58%;transform:rotate(-1deg)}
+.hub-group .hub-grid>.hub-card:nth-child(6){border-radius:58% 42% 73% 27% / 29% 43% 57% 71%;transform:rotate(.8deg)}
+.hub-group .hub-grid>.hub-card:nth-child(7){border-radius:75% 25% 36% 64% / 54% 34% 66% 46%;transform:rotate(-1.3deg)}
+.hub-group .hub-grid>.hub-card:nth-child(8){border-radius:35% 65% 48% 52% / 70% 26% 74% 30%;transform:rotate(1.1deg)}
+.hub-group .hub-grid>.hub-card:nth-child(9){border-radius:51% 49% 29% 71% / 27% 61% 39% 73%;transform:rotate(-.6deg)}
+.hub-group .hub-grid>.hub-card:nth-child(10){border-radius:39% 61% 70% 30% / 64% 38% 62% 36%;transform:rotate(.7deg)}
 @media(max-width:600px){.hub-grid>.hub-card:not(.hub-wide){min-height:148px;padding:15px 22px}.hub-wide{min-height:96px!important}}
 
 .hub-card:nth-child(2) { animation-delay:.06s; } .hub-card:nth-child(3) { animation-delay:.12s; } .hub-card:nth-child(4) { animation-delay:.18s; } .hub-card:nth-child(5) { animation-delay:.24s; } .hub-card:nth-child(6) { animation-delay:.30s; } .hub-card:nth-child(7) { animation-delay:.36s; }
@@ -88,18 +99,42 @@ body { background: linear-gradient(160deg, #111111, #1c1c1c 55%, #292929); backg
 .hub-contact-link{flex:1 1 150px;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-weight:600}
 .hub-contact-link svg{width:38px;height:38px;fill:currentColor}
 @media(max-width:420px){.hub-head{padding-left:104px;min-height:82px}.hub-brand .hub-by{margin-top:12px;font-size:25px}.hub-logo-img{width:94px;height:82px;top:0}.hub-contact-links{gap:8px}.hub-contact-link{min-height:96px}}
+
+.hub-contact{position:relative;overflow:hidden;padding:24px;margin-top:28px;border-radius:26px;background:linear-gradient(145deg,rgba(24,45,53,.96),rgba(28,34,42,.98));border:1px solid rgba(109,207,194,.34);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.hub-contact:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#28a99b,#e0a83d,#4187c4)}
+.hub-contact-title{font-size:24px;margin:0 0 8px;color:#fff}.hub-contact-links{gap:14px}
+.hub-contact-link{min-height:108px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.16);transition:transform .2s,border-color .2s}
+.hub-contact-link:hover{transform:translateY(-3px);border-color:rgba(107,210,193,.65)}.hub-contact-link svg{width:32px;height:32px}
+.hub-game{margin:28px 0 24px;padding:24px;border-radius:28px;background:linear-gradient(145deg,#173a3b,#1c2d42 58%,#26363c);border:1px solid rgba(95,201,177,.42);box-shadow:0 18px 46px rgba(0,0,0,.35);text-align:center}
+.hub-game .hub-game-mark{font-size:48px;line-height:1;margin-bottom:8px}.hub-game h2{margin:0 0 8px;font-size:27px;color:#fff}
+.hub-game p{margin:0 0 12px;color:rgba(255,255,255,.76);line-height:1.75}.hub-game-stats{display:flex;justify-content:center;gap:24px;margin:12px 0 16px;font-weight:700}
+.hub-game-area{position:relative;height:260px;max-width:760px;margin:0 auto 16px;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.18);background:radial-gradient(ellipse at 50% 10%,rgba(78,161,145,.24),transparent 66%),rgba(8,18,24,.58)}
+.hub-game-target{position:absolute;width:54px;height:54px;border:2px solid rgba(255,255,255,.9);border-radius:50%;background:linear-gradient(145deg,#ffd66f,#f08a3c);font-size:28px;cursor:pointer;box-shadow:0 6px 18px rgba(255,178,52,.32);touch-action:manipulation}
+.hub-game-target:active{transform:scale(.9)}.hub-game-start{border:0;border-radius:14px;padding:12px 18px;background:linear-gradient(110deg,#167f78,#2369a5);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.hub-game-hint{font-size:14px!important;margin:10px 0 0!important}
+@media(max-width:500px){.hub-contact,.hub-game{padding:17px;border-radius:22px}.hub-contact-title{font-size:21px}.hub-game-area{height:220px}.hub-game-stats{gap:14px;font-size:14px}}
+
+
+.hub-grid{width:100%;min-width:0}
+.hub-grid>.hub-wide{width:auto;max-width:100%;min-width:0;box-sizing:border-box;min-height:122px!important;height:auto!important;padding:18px 24px!important;gap:16px!important;overflow:hidden!important;border-radius:42px 54px 38px 48px / 55% 44% 56% 45%!important;transform:none!important}
+.hub-grid>.hub-wide .hub-icon{flex:0 0 46px;min-width:46px;text-align:center;line-height:1.2;font-size:38px!important}
+.hub-grid>.hub-wide .hub-wt{flex:1 1 0;min-width:0;max-width:100%;overflow:hidden;text-align:start;gap:3px}
+.hub-grid>.hub-wide .hub-wname{font-size:24px;line-height:1.35;overflow-wrap:anywhere}
+.hub-grid>.hub-wide .hub-wdesc,.hub-grid>.hub-wide .hub-wgo{display:block;line-height:1.4;white-space:normal}
+@media(max-width:600px){.hub-grid>.hub-wide{min-height:116px!important;padding:16px 20px!important;gap:12px!important}.hub-grid>.hub-wide .hub-icon{flex-basis:40px;min-width:40px;font-size:34px!important}.hub-grid>.hub-wide .hub-wname{font-size:22px}}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="app" id="app"></div>
 <script>
-var sites = [{"wide":true,"name":"جميع مواقع عمر ابراهيم","desc":"مواقع من تصميم عمر","icon":"🦊","color":"#b91c1c","link":"","intro":"تم تصميم هذه المواقع من قبل عمر ابراهيم محمد","options":[{"name":"news_github","desc":"أخبار العالم والدول","icon":"📰","color":"#0b7285","link":"https://omr259.github.io/news/"},{"name":"news_pirbase","desc":"افتح الموقع","icon":"🦊","color":"#ea580c","link":"https://fox-9b261.web.app/home.html"},{"name":"news_old","desc":"القديم من غير تسجيل دخول","icon":"🗞️","color":"#7c3aed","link":"https://omr259.github.io/news-old/"}]},{"name":"موقع الشحن","desc":"اشحن ألعابك","icon":"⚡","color":"#c45b19","link":"","options":[{"name":"شحن فري فاير","desc":"شحن جواهر فري فاير من Shop2Game","icon":"💎","color":"#f08c00","link":"https://shop2game.com/"},{"name":"شحن ببجي","desc":"شحن UC من Midasbuy","icon":"🔫","color":"#2f9e44","link":"https://www.midasbuy.com/"},{"name":"Steam","desc":"رصيد وألعاب ستيم","icon":"🕹️","color":"#1864ab","link":"https://store.steampowered.com/"},{"name":"Razer Gold","desc":"رصيد ألعاب من ريزر","icon":"🐍","color":"#2b8a3e","link":"https://www.razer.com/gold"},{"name":"لعبة تانية","desc":"هتتضاف بعدين","icon":"🎮","color":"#7048e8","link":""}]},{"name":"أخبار","desc":"مواقع أخبار عربية","icon":"📰","color":"#0f766e","link":"","options":[{"name":"BBC عربي","desc":"أخبار بي بي سي","icon":"🌍","color":"#c92a2a","link":"https://www.bbc.com/arabic"},{"name":"الجزيرة","desc":"الجزيرة نت","icon":"📡","color":"#e67700","link":"https://www.aljazeera.net/"},{"name":"اليوم السابع","desc":"أخبار مصر","icon":"🗞️","color":"#1971c2","link":"https://www.youm7.com/"},{"name":"المصري اليوم","desc":"أخبار مصر","icon":"📰","color":"#5f3dc4","link":"https://www.almasryalyoum.com/"},{"name":"الشروق","desc":"بوابة الشروق","icon":"🌅","color":"#d9480f","link":"https://www.shorouknews.com/"},{"name":"سكاي نيوز عربية","desc":"أخبار عاجلة","icon":"⚡","color":"#0c8599","link":"https://www.skynewsarabia.com/"}]},{"name":"أفلام","desc":"مواقع مشاهدة قانونية","icon":"🎬","color":"#c23b67","link":"","options":[{"name":"Watch It","desc":"مسلسلات وأفلام مصرية","icon":"📺","color":"#e03131","link":"https://watchit.com/"},{"name":"شاهد","desc":"MBC شاهد","icon":"🍿","color":"#1c7ed6","link":"https://shahid.mbc.net/"},{"name":"Netflix","desc":"أفلام ومسلسلات","icon":"🎞️","color":"#b02a37","link":"https://www.netflix.com/"},{"name":"YouTube أفلام","desc":"أفلام للمشاهدة","icon":"▶️","color":"#f03e3e","link":"https://www.youtube.com/movies"}]},{"name":"ألعاب","desc":"ألعاب مجانية أونلاين","icon":"🎮","color":"#5b46c8","link":"","options":[{"name":"Poki","desc":"ألعاب مجانية","icon":"🕹️","color":"#1c7ed6","link":"https://poki.com/"},{"name":"CrazyGames","desc":"ألعاب مجانية","icon":"🤪","color":"#7048e8","link":"https://www.crazygames.com/"},{"name":"Y8","desc":"ألعاب فلاش وأونلاين","icon":"🎯","color":"#e8590c","link":"https://www.y8.com/"},{"name":"Miniclip","desc":"ألعاب مشهورة","icon":"🏓","color":"#c2255c","link":"https://www.miniclip.com/"},{"name":"itch.io","desc":"ألعاب مستقلة مجانية","icon":"👾","color":"#fa5252","link":"https://itch.io/games/free"}]},{"name":"موسيقى","desc":"اسمع أغاني","icon":"🎧","color":"#a33b84","link":"","options":[{"name":"YouTube Music","desc":"أغاني وكليبات","icon":"🎵","color":"#e03131","link":"https://music.youtube.com/"},{"name":"Spotify","desc":"أغاني وبودكاست","icon":"🟢","color":"#2b8a3e","link":"https://open.spotify.com/"},{"name":"أنغامي","desc":"أغاني عربي","icon":"🎶","color":"#7048e8","link":"https://www.anghami.com/"}]},{"name":"أدوات","desc":"أدوات مفيدة","icon":"🧰","color":"#247ba0","link":"","options":[{"name":"ترجمة جوجل","desc":"ترجم أي نص","icon":"🌐","color":"#1c7ed6","link":"https://translate.google.com/"},{"name":"Canva","desc":"تصميم صور وبوسترات","icon":"🎨","color":"#0c8599","link":"https://www.canva.com/"},{"name":"remove.bg","desc":"شيل خلفية الصورة","icon":"✂️","color":"#5f3dc4","link":"https://www.remove.bg/"}]},{"name":"المتجر","desc":"اطلب منتجاتك","icon":"🛍️","color":"#0c8599","link":""},{"name":"موقع تاني","desc":"هيتضاف بعدين","icon":"🌐","color":"#2f9e44","link":""}];
+var sites = [{"wide":true,"name":"جميع مواقع عمر ابراهيم","desc":"مواقع من تصميم عمر","icon":"🦊","color":"#177e89","link":"","intro":"تم تصميم هذه المواقع من قبل عمر ابراهيم محمد","options":[{"name":"news_github","desc":"أخبار العالم والدول","icon":"📰","color":"#d18a18","link":"https://omr259.github.io/news/"},{"name":"news_pirbase","desc":"افتح الموقع","icon":"🦊","color":"#39884b","link":"https://fox-9b261.web.app/home.html"},{"name":"news_old","desc":"القديم من غير تسجيل دخول","icon":"🗞️","color":"#c34732","link":"https://omr259.github.io/news-old/"}]},{"name":"أخبار","desc":"مواقع أخبار عربية","icon":"📰","color":"#2563a6","link":"","options":[{"name":"BBC عربي","desc":"أخبار بي بي سي","icon":"🌍","color":"#39884b","link":"https://www.bbc.com/arabic"},{"name":"الجزيرة","desc":"الجزيرة نت","icon":"📡","color":"#c34732","link":"https://www.aljazeera.net/"},{"name":"اليوم السابع","desc":"أخبار مصر","icon":"🗞️","color":"#168c78","link":"https://www.youm7.com/"},{"name":"المصري اليوم","desc":"أخبار مصر","icon":"📰","color":"#326f9e","link":"https://www.almasryalyoum.com/"},{"name":"الشروق","desc":"بوابة الشروق","icon":"🌅","color":"#ae6b17","link":"https://www.shorouknews.com/"},{"name":"سكاي نيوز عربية","desc":"أخبار عاجلة","icon":"⚡","color":"#478f5b","link":"https://www.skynewsarabia.com/"}]},{"name":"أفلام","desc":"أفلام ومسلسلات","icon":"🎬","color":"#d18a18","link":"","options":[{"name":"Watch It","desc":"مسلسلات وأفلام مصرية","icon":"📺","color":"#c34732","link":"https://watchit.com/"},{"name":"شاهد","desc":"MBC شاهد","icon":"🍿","color":"#168c78","link":"https://shahid.mbc.net/"},{"name":"Netflix","desc":"أفلام ومسلسلات","icon":"🎞️","color":"#326f9e","link":"https://www.netflix.com/"},{"name":"YouTube أفلام","desc":"أفلام للمشاهدة","icon":"▶️","color":"#ae6b17","link":"https://www.youtube.com/movies"}]},{"name":"ألعاب","desc":"ألعاب مجانية أونلاين","icon":"🎮","color":"#39884b","link":"","options":[{"name":"Poki","desc":"ألعاب مجانية","icon":"🕹️","color":"#168c78","link":"https://poki.com/"},{"name":"CrazyGames","desc":"ألعاب مجانية","icon":"🤪","color":"#326f9e","link":"https://www.crazygames.com/"},{"name":"Y8","desc":"ألعاب فلاش وأونلاين","icon":"🎯","color":"#ae6b17","link":"https://www.y8.com/"},{"name":"Miniclip","desc":"ألعاب مشهورة","icon":"🏓","color":"#478f5b","link":"https://www.miniclip.com/"},{"name":"itch.io","desc":"ألعاب مستقلة مجانية","icon":"👾","color":"#bb493a","link":"https://itch.io/games/free"}]},{"name":"موسيقى","desc":"اسمع أغاني","icon":"🎧","color":"#c34732","link":"","options":[{"name":"YouTube Music","desc":"أغاني وكليبات","icon":"🎵","color":"#326f9e","link":"https://music.youtube.com/"},{"name":"Spotify","desc":"أغاني وبودكاست","icon":"🟢","color":"#ae6b17","link":"https://open.spotify.com/"},{"name":"أنغامي","desc":"أغاني عربي","icon":"🎶","color":"#478f5b","link":"https://www.anghami.com/"}]},{"name":"أدوات","desc":"أدوات مفيدة","icon":"🧰","color":"#168c78","link":"","options":[{"name":"ترجمة جوجل","desc":"ترجم أي نص","icon":"🌐","color":"#ae6b17","link":"https://translate.google.com/"},{"name":"Canva","desc":"تصميم صور وبوسترات","icon":"🎨","color":"#478f5b","link":"https://www.canva.com/"},{"name":"remove.bg","desc":"شيل خلفية الصورة","icon":"✂️","color":"#bb493a","link":"https://www.remove.bg/"}]},{"name":"المتجر","desc":"اطلب منتجاتك","icon":"🛍️","color":"#326f9e","link":""},{"name":"موقع تاني","desc":"هيتضاف بعدين","icon":"🌐","color":"#ae6b17","link":""}];
 var app = document.getElementById('app');
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-function card(s,onOpen){
+function card(s,onOpen,isHome){
   var live = s.options || s.link, e;
-  if (s.wide){e=el('button','hub-card is-live hub-wide');e.type='button';e.onclick=onOpen;e.appendChild(el('span','hub-icon',s.icon));var w=el('span','hub-wt');w.appendChild(el('span','hub-wname',s.name));w.appendChild(el('span','hub-wdesc',s.desc));w.appendChild(el('span','hub-wgo','افتح \u2190'));e.appendChild(w);return e}
+  if (s.wide && isHome){e=el('button','hub-card is-live hub-wide');e.type='button';e.onclick=onOpen;e.appendChild(el('span','hub-icon',s.icon));var w=el('span','hub-wt');w.appendChild(el('span','hub-wname',s.name));w.appendChild(el('span','hub-wdesc',s.desc));w.appendChild(el('span','hub-wgo','افتح \u2190'));e.appendChild(w);return e}
   if (s.options){e=el('button','hub-card is-live');e.type='button';e.onclick=onOpen}
   else if (s.link){e=el('a','hub-card is-live');e.href=s.link;e.target='_blank';e.rel='noopener noreferrer'}
   else {e=el('div','hub-card is-soon')}
@@ -121,7 +156,7 @@ function render(open){
   g.appendChild(el('p','label',site?'الخيارات':'المواقع'));
   if(site){var b=el('button','hub-back','\u2192 رجوع');b.type='button';b.onclick=function(){render(null);window.scrollTo(0,0)};g.appendChild(b)}
   var grid=el('div','hub-grid');
-  (site?site.options:sites).forEach(function(s,i){grid.appendChild(card(s,function(){render(i);window.scrollTo(0,0)}))});
+  (site?site.options:sites).forEach(function(s,i){grid.appendChild(card(s,function(){render(i);window.scrollTo(0,0)},!site))});
   g.appendChild(grid);app.appendChild(g);
   if(!site){
     var contact=el('section','hub-contact');contact.setAttribute('aria-label','التواصل');
@@ -135,9 +170,28 @@ function render(open){
   }
 }
 var __ac=null;
-function hubClick(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!__ac)__ac=new C();if(__ac.resume)__ac.resume();var t=__ac.currentTime;[[740,0],[980,.075]].forEach(function(n){var o=__ac.createOscillator(),g=__ac.createGain();o.type='sine';o.frequency.setValueAtTime(n[0],t+n[1]);g.gain.setValueAtTime(.0001,t+n[1]);g.gain.exponentialRampToValueAtTime(.035,t+n[1]+.012);g.gain.exponentialRampToValueAtTime(.0001,t+n[1]+.11);o.connect(g);g.connect(__ac.destination);o.start(t+n[1]);o.stop(t+n[1]+.12)})}catch(e){}}
+function hubClick(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!__ac)__ac=new C();if(__ac.resume)__ac.resume();var t=__ac.currentTime,o=__ac.createOscillator(),g=__ac.createGain();o.type='triangle';o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(360,t+.08);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.018,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+.095);o.connect(g);g.connect(__ac.destination);o.start(t);o.stop(t+.1)}catch(e){}}
 document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('.hub-card.is-live,.hub-back'))hubClick()},true);
 render(null);
+
+(function(){
+ var contact=document.querySelector('.hub-contact');if(!contact)return;
+ var game=document.createElement('section');game.className='hub-game';game.setAttribute('aria-label','لعبة اصطياد النجمة');
+ var mark=document.createElement('div');mark.className='hub-game-mark';mark.textContent='🌟';game.appendChild(mark);
+ var heading=document.createElement('h2');heading.textContent='تحدي اصطياد النجمة';game.appendChild(heading);
+ var desc=document.createElement('p');desc.textContent='اضغط النجمة بأسرع ما تقدر خلال 20 ثانية. لعبة صغيرة من تصميم الصفحة.';game.appendChild(desc);
+ var stats=document.createElement('div');stats.className='hub-game-stats';var scoreEl=document.createElement('div');var timeEl=document.createElement('div');stats.appendChild(scoreEl);stats.appendChild(timeEl);game.appendChild(stats);
+ var area=document.createElement('div');area.className='hub-game-area';area.setAttribute('role','application');area.setAttribute('aria-label','مساحة اللعب');game.appendChild(area);
+ var target=document.createElement('button');target.type='button';target.className='hub-game-target';target.textContent='★';target.setAttribute('aria-label','اضغط النجمة');target.hidden=false;target.style.left='calc(50% - 27px)';target.style.top='calc(50% - 27px)';area.appendChild(target);
+ var start=document.createElement('button');start.type='button';start.className='hub-game-start';start.textContent='ابدأ اللعب';game.appendChild(start);
+ var hint=document.createElement('p');hint.className='hub-game-hint';hint.textContent='النتيجة بتتحسب على جهازك فقط.';game.appendChild(hint);
+ var score=0,remaining=20,timer=null;
+ function place(){var maxX=Math.max(0,area.clientWidth-58),maxY=Math.max(0,area.clientHeight-58);target.style.left=Math.floor(Math.random()*(maxX+1))+'px';target.style.top=Math.floor(Math.random()*(maxY+1))+'px'}
+ function finish(){clearInterval(timer);timer=null;target.hidden=true;start.disabled=false;start.textContent='العب تاني';hint.textContent='خلص الوقت! نتيجتك: '+score+' نجمة. اضغط للعب مرة تانية.'}
+ function update(){scoreEl.textContent='النجوم: '+score;timeEl.textContent='الوقت: '+remaining+' ث'}
+ start.addEventListener('click',function(){clearInterval(timer);score=0;remaining=20;start.disabled=true;target.hidden=false;hint.textContent='يلا بسرعة!';update();place();timer=setInterval(function(){remaining--;update();if(remaining<=0)finish()},1000)});
+ target.addEventListener('click',function(){if(!timer)return;score++;update();place()});contact.insertAdjacentElement('afterend',game);update();
+})();
 </script>
 </body>
 </html>
