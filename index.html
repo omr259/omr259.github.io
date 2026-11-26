@@ -182,11 +182,11 @@ render(null);
 
 (function(){
  var contact=document.querySelector('.hub-contact');if(!contact)return;
- var panel=document.createElement('section');panel.className='hub-chill';panel.setAttribute('aria-label','لمسة روقان');
+ var panel=document.createElement('section');panel.className='hub-chill';panel.setAttribute('aria-label','');
  var ring=document.createElement('span');ring.className='hub-chill-ripple';ring.setAttribute('aria-hidden','true');panel.appendChild(ring);
- var title=document.createElement('h2');title.textContent='تحب تجرب ؟';panel.appendChild(title);
- var text=document.createElement('p');text.textContent='واثق في نفسك اوي';panel.appendChild(text);
- var button=document.createElement('button');button.type='button';button.className='hub-chill-action';button.textContent='لمسة هدوء';button.setAttribute('aria-label','شغّل تأثير هدوء بسيط');panel.appendChild(button);
+ var title=document.createElement('h2');title.textContent='اي رايك في الموقع';panel.appendChild(title);
+ var text=document.createElement('p');text.textContent'محبوس ضليمه';panel.appendChild(text);
+ var button=document.createElement('button');button.type='button';button.className='hub-chill-action';button.textContent='جرب تدوس';button.setAttribute('aria-label','شغّل تأثير هدوء بسيط');panel.appendChild(button);
  button.addEventListener('click',function(){panel.classList.remove('is-glowing');void panel.offsetWidth;panel.classList.add('is-glowing');window.setTimeout(function(){panel.classList.remove('is-glowing')},1450)});
  contact.insertAdjacentElement('afterend',panel);
 })();
