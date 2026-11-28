@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Desktop</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,Arial,sans-serif;background:#0b1d3a}
-#desk{position:fixed;inset:0 0 44px 0;background:radial-gradient(circle at 30% 20%,#2b6cd4,#10285a 60%,#071225);}
+html,body{margin:0;padding:0;width:100%;height:100%;height:100dvh;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;font-family:system-ui,Arial,sans-serif;background:#0b1d3a}
+#desk{position:fixed;top:0;left:0;right:0;bottom:44px;width:100vw;width:100dvw;overflow:hidden;background:radial-gradient(circle at 30% 20%,#2b6cd4,#10285a 60%,#071225);}
 .icons{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;flex-wrap:wrap;height:calc(100% - 20px);gap:6px;align-content:flex-start}
 .icon{width:78px;padding:8px 4px;text-align:center;color:#fff;font-size:12px;border-radius:8px;user-select:none;cursor:pointer}
 .icon:active,.icon:hover{background:rgba(255,255,255,.18)}
 .icon b{display:block;font-size:34px;font-weight:400;margin-bottom:2px}
 .win{position:absolute;background:#fff;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;min-width:220px;min-height:140px;border:1px solid #345}
-.win.max{inset:0!important;width:auto!important;height:auto!important;border-radius:0}
+.win.max{top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important;border-radius:0}
 .tb{background:#1f3b73;color:#fff;display:flex;align-items:center;padding:0 6px;height:36px;gap:6px;user-select:none;touch-action:none;cursor:move;flex:none}
 .tb .t{flex:1;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tb button{width:32px;height:28px;border:0;border-radius:5px;background:rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer}
@@ -20,7 +20,7 @@ html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,Arial,sans-
 .body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .rs{position:absolute;left:0;bottom:0;width:22px;height:22px;cursor:nesw-resize;touch-action:none;background:linear-gradient(45deg,transparent 50%,#789 50%);opacity:.6}
 .win.max .rs{display:none}
-#bar{position:fixed;left:0;right:0;bottom:0;height:44px;background:#0a1630;display:flex;align-items:center;gap:6px;padding:0 6px;border-top:1px solid #2a4}
+#bar{position:fixed;left:0;right:0;bottom:0;height:44px;z-index:100000;background:#0a1630;display:flex;align-items:center;gap:6px;padding:0 6px;border-top:1px solid #2a4}
 #tasks{flex:1;display:flex;gap:5px;overflow-x:auto}
 .task{padding:6px 10px;background:#1d3566;color:#fff;border-radius:5px;font-size:12px;white-space:nowrap;cursor:pointer}
 .task.on{background:#3b6fd6}
@@ -37,6 +37,25 @@ textarea{width:100%;height:100%;border:0;padding:10px;font-size:15px;resize:none
 .urlbar{display:flex;gap:4px;padding:4px;background:#eef;direction:ltr;flex:none}
 .urlbar input{flex:1;padding:5px;font-size:14px;min-width:0}
 #lock{position:fixed;inset:0;z-index:999999;background:radial-gradient(circle at 50% 30%,#1b3a73,#050b18);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#fff}#lock input{padding:12px;font-size:18px;border-radius:8px;border:0;text-align:center;width:220px}#lock button{padding:10px 30px;font-size:16px;border:0;border-radius:8px;background:#3b6fd6;color:#fff}#lock p{margin:0;color:#f77;min-height:20px;font-size:14px}
+.rem{display:flex;flex-direction:column;height:100%}
+.rem .hb{flex:1;position:relative;min-height:0;background:#000;color:#ccc;font-size:14px}
+.rem .hb>.msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;z-index:1;pointer-events:none}
+.rem .quick{display:flex;gap:4px;padding:4px;background:#eef;flex:none;direction:rtl}
+.rem .quick button,.urlbar button{padding:5px 10px;border:0;border-radius:5px;background:#3b6fd6;color:#fff;font-size:13px}
+.sci{display:flex;flex-direction:column;height:100%;background:#2a2d31;padding:6px;gap:6px;direction:ltr;overflow:auto}
+.sci .scr{background:#c7d3b4;border:3px solid #111;border-radius:6px;padding:6px 8px;font-family:monospace;color:#111;min-height:96px}
+.sci .ex{font-size:16px;min-height:22px;word-break:break-all;text-align:left}
+.sci .rs2{font-size:26px;text-align:right;font-weight:700;min-height:34px;word-break:break-all}
+.sci .rr{display:flex;gap:4px;font-size:11px}
+.sci .rr div{flex:1;text-align:center;border-top:1px solid #556;padding-top:2px}
+.sci .rr b{display:block;font-size:15px}
+.sci .ky{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;flex:1}
+.sci .ky button{border:0;border-radius:6px;font-size:15px;padding:8px 0;min-height:36px;background:#4a4f57;color:#fff}
+.sci .ky button.n{background:#e7e7e7;color:#111;font-weight:700}
+.sci .ky button.o{background:#6a7078}
+.sci .ky button.ac{background:#d33;color:#fff}
+.sci .ky button.eq{background:#e8a317;color:#111;font-weight:700}
+.sci .ky button.on{background:#3b6fd6}
 </style></head><body>
 <div id="lock"><div style="font-size:50px">🔒</div><h2 style="margin:0">windoz omar</h2><input id="pw" type="password" placeholder="الباسورد" autocomplete="off"><button id="pwb">دخول</button><p id="pwe"></p></div>
 <div id="desk"><div class="icons" id="icons"></div></div>
@@ -55,7 +74,10 @@ const APPS=[
  {id:'site',ic:'🌐',name:'موقعي',type:'url',url:'https://omr259.github.io/',w:520,h:420},
  {id:'browser',ic:'🧭',name:'متصفح',type:'browser'},
  {id:'notes',ic:'📝',name:'ملاحظات',type:'notes'},
- {id:'calc',ic:'🧮',name:'آلة حاسبة',type:'calc'},
+ {id:'sci',ic:'🧮',name:'آلة حاسبة علمية',type:'sci',w:340,h:560},
+ {id:'tiktok',ic:'🎵',name:'تيك توك',type:'remote',start:'https://www.tiktok.com/',w:380,h:560},
+ {id:'yt',ic:'▶️',name:'يوتيوب',type:'remote',start:'https://www.youtube.com/',w:380,h:560},
+ {id:'rb',ic:'🌍',name:'متصفح حقيقي',type:'remote',start:'',w:380,h:560},
  {id:'about',ic:'ℹ️',name:'عن النظام',type:'html',html:'<div class="pad"><h3>سطح مكتب تجريبي</h3><p>اسحب النافذة من العنوان، كبّرها بزر ▢، صغّرها بزر ─، أو اسحب الزاوية لتغيير الحجم.</p></div>'}
 ];
 /* ================================ */
@@ -67,19 +89,101 @@ APPS.forEach(a=>{
  let last=0;d.onclick=()=>{open(a)};ic.appendChild(d);
  const m=document.createElement('div');m.textContent=a.ic+' '+a.name;m.onclick=()=>{open(a);menu.style.display='none'};menu.appendChild(m);
 });
+{const m=document.createElement('div');m.textContent='⛶ ملء الشاشة';m.onclick=()=>{menu.style.display='none';const d=document.documentElement;(document.fullscreenElement?document.exitFullscreen():(d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d))};menu.appendChild(m)}
 document.getElementById('start').onclick=e=>{e.stopPropagation();menu.style.display=menu.style.display=='block'?'none':'block'};
 document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target)&&e.target.id!='start')menu.style.display='none'});
 function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})}tick();setInterval(tick,10000);
 
+
+/* ===== المتصفح الحقيقي (Hyperbeam عن طريق السيرفر بتاعك) ===== */
+const BACKEND='https://windoz-backend.ibrahim2020-gi.workers.dev/session';
+function remote(a,body){
+ body.innerHTML='<div class="rem"><div class="urlbar"><input placeholder="https://..." value="'+(a.start||'')+'"><button>Go</button></div><div class="quick"><button data-u="https://www.tiktok.com/">تيك توك</button><button data-u="https://www.youtube.com/">يوتيوب</button><button data-u="https://www.bbc.com/news">BBC</button></div><div class="hb"><div class="msg">اكتب رابط واضغط Go</div></div></div>';
+ const inp=body.querySelector('input'),hb=body.querySelector('.hb'),msg=hb.querySelector('.msg');
+ let inst=null,dead=false,busy=false;
+ let sid=null;const endSrv=()=>{if(sid){try{fetch(BACKEND.replace('/session','/end'),{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid})}).catch(()=>{})}catch(e){}sid=null}};
+ const kill=()=>{if(inst){try{inst.destroy()}catch(e){}inst=null}endSrv();hb.querySelectorAll('div:not(.msg),iframe').forEach(x=>x.remove())};
+ async function start(u){
+  if(busy)return;u=(u||'').trim();if(!u)return;if(!/^https?:/.test(u))u='https://'+u;inp.value=u;
+  busy=true;kill();msg.style.display='flex';msg.textContent='جاري التشغيل... ممكن ياخد 10-20 ثانية';
+  try{
+   const r=await fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u})});
+   if(!r.ok)throw new Error('server '+r.status);
+   const d=await r.json();if(!d.embed_url)throw new Error(d.error?('server: '+d.error+(d.status?' '+d.status:'')+' (جلسة قديمة ممكن لسه شغالة، استنى دقيقة)'):'no embed_url');sid=d.session_id;
+   if(dead)return;
+   const mod=await import('https://unpkg.com/@hyperbeam/web@latest/dist/index.js');
+   const box=document.createElement('div');box.style.cssText='position:absolute;inset:0';hb.appendChild(box);
+   inst=await mod.default(box,d.embed_url);
+   if(dead){kill();return}
+   msg.style.display='none';
+  }catch(e){msg.style.display='flex';msg.textContent='فشل التشغيل: '+(e&&e.message||e)+' (تأكد إن الموقع مفتوح من omr259.github.io)'}
+  busy=false;
+ }
+ body.querySelector('.urlbar button').onclick=()=>start(inp.value);
+ inp.onkeydown=e=>{if(e.key=='Enter')start(inp.value)};
+ body.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>start(b.dataset.u));
+ if(a.start)start(a.start);
+ window.addEventListener('pagehide',endSrv);
+ return ()=>{dead=true;kill()};
+}
+/* ===== الآلة الحاسبة العلمية ===== */
+function sci(body){
+ body.innerHTML='<div class="sci"><div class="scr"><div class="ex"></div><div class="rs2"></div><div class="rr"></div></div><div class="ky"></div></div>';
+ const ex=body.querySelector('.ex'),rs=body.querySelector('.rs2'),rr=body.querySelector('.rr'),ky=body.querySelector('.ky');
+ let s='',ans=0,deg=true,shown=false;
+ const fact=n=>{n=Math.round(n);if(n<0||n>170)return NaN;let r=1;for(let i=2;i<=n;i++)r*=i;return r};
+ const K=[
+  ['DEG','on','deg'],['sin','o','sin('],['cos','o','cos('],['tan','o','tan('],['AC','ac','AC'],
+  ['asin','o','asin('],['acos','o','acos('],['atan','o','atan('],['log','o','log('],['ln','o','ln('],
+  ['√','o','√('],['x²','o','^2'],['xʸ','o','^'],['x!','o','!'],['1/x','o','1/('],
+  ['π','o','π'],['e','o','e'],['(','o','('],[')','o',')'],['⌫','ac','DEL'],
+  ['7','n','7'],['8','n','8'],['9','n','9'],['÷','o','÷'],['Ans','o','Ans'],
+  ['4','n','4'],['5','n','5'],['6','n','6'],['×','o','×'],['%','o','%'],
+  ['1','n','1'],['2','n','2'],['3','n','3'],['−','o','-'],['EXP','o','e+'],
+  ['0','n','0'],['.','n','.'],['±','o','NEG'],['+','o','+'],['=','eq','=']
+ ];
+ function calc(){
+  let t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,'(Math.PI)').replace(/Ans/g,'('+ans+')');
+  t=t.replace(/(\d)e\+/g,'$1e+');
+  t=t.replace(/(\d+(?:\.\d+)?|\))%/g,'($1/100)');
+  t=t.replace(/(\d+(?:\.\d+)?)!/g,'F($1)');
+  t=t.replace(/\^/g,'**');
+  t=t.replace(/√\(/g,'Q(').replace(/asin\(/g,'AS(').replace(/acos\(/g,'AC(').replace(/atan\(/g,'AT(').replace(/sin\(/g,'SN(').replace(/cos\(/g,'CS(').replace(/tan\(/g,'TN(').replace(/log\(/g,'LG(').replace(/ln\(/g,'LN(');
+  t=t.replace(/(\d|\))(?=\(|[A-Z]{1,2}\()/g,'$1*').replace(/(\d|\))(?=e(?![+\d]))/g,'$1*');
+  t=t.replace(/\be\b(?!\+)/g,'(Math.E)');
+  if(!/^[0-9+\-*/().eQASNCTLGFMathPIE\s]*$/.test(t))throw 0;
+  const r=deg?Math.PI/180:1;
+  const f=Function('Q','AS','AC','AT','SN','CS','TN','LG','LN','F','"use strict";return ('+t+')');
+  const v=f(Math.sqrt,x=>Math.asin(x)/r,x=>Math.acos(x)/r,x=>Math.atan(x)/r,x=>{const q=Math.sin(x*r);return Math.abs(q)<1e-15?0:q},x=>{const q=Math.cos(x*r);return Math.abs(q)<1e-15?0:q},x=>Math.tan(x*r),Math.log10,Math.log,fact);
+  if(typeof v!='number'||!isFinite(v))throw 0;return v;
+ }
+ function rnd(v,d){const m=Math.pow(10,d);return (Math.round((v+Math.sign(v)*1e-12)*m)/m).toFixed(d)}
+ function show(v){
+  rs.textContent=String(v);rr.innerHTML='';
+  if(!Number.isInteger(v)&&Math.abs(v)<1e15){
+   [['لأقرب عُشر',1],['لأقرب مئة',2],['لأقرب ألف',3]].forEach(([l,d])=>{const x=document.createElement('div');x.innerHTML='<b>'+rnd(v,d)+'</b>'+l+' ('+d+')';rr.appendChild(x)});
+  }
+ }
+ ex.textContent='';rs.textContent='0';
+ K.forEach(([l,c,v])=>{const b=document.createElement('button');b.textContent=l;b.className=c;b.onclick=()=>{
+  if(v=='deg'){deg=!deg;b.textContent=deg?'DEG':'RAD';return}
+  if(shown&&v!='='&&v!='DEL'&&v!='AC'){if(['+','-','×','÷','^','^2','!','%','e+'].includes(v)){s='Ans'}else if(v!='NEG'){s=''}shown=false;rr.innerHTML=''}
+  if(v=='AC'){s='';ex.textContent='';rs.textContent='0';rr.innerHTML='';shown=false;return}
+  if(v=='DEL'){s=s.replace(/(asin\(|acos\(|atan\(|sin\(|cos\(|tan\(|log\(|ln\(|√\(|Ans|.)$/,'');ex.textContent=s;return}
+  if(v=='NEG'){s=s.startsWith('-')?s.slice(1):'-'+s;ex.textContent=s;return}
+  if(v=='='){
+   try{const raw=calc();ans=raw;const r=parseFloat(raw.toPrecision(12));ex.textContent=s+' =';show(r);shown=true}catch(e){rs.textContent='خطأ';rr.innerHTML='';shown=false}
+   return}
+  s+=v;ex.textContent=s;
+ };ky.appendChild(b)});
+}
 function content(a,body){
  if(a.type=='url'){body.innerHTML='<iframe src="'+a.url+'"></iframe>'}
  else if(a.type=='html'){body.innerHTML=a.html}
  else if(a.type=='notes'){const t=document.createElement('textarea');t.placeholder='اكتب هنا...';t.value=localStorage.getItem('notes')||'';t.oninput=()=>localStorage.setItem('notes',t.value);body.appendChild(t)}
- else if(a.type=='calc'){
-  body.innerHTML='<div class="calc"><input readonly value="0"></div>';const g=body.firstChild,o=g.firstChild;let s='';
-  'C ( ) / 7 8 9 * 4 5 6 - 1 2 3 + 0 . ⌫ ='.split(' ').forEach(k=>{const b=document.createElement('button');b.textContent=k;b.onclick=()=>{
-   if(k=='C')s='';else if(k=='⌫')s=s.slice(0,-1);else if(k=='='){try{s=String(Function('"use strict";return ('+s+')')())}catch(e){s=''}}else s+=k;o.value=s||'0'};g.appendChild(b)});
- }
+
+ else if(a.type=='sci'){sci(body)}
+ else if(a.type=='remote'){return remote(a,body)}
  else if(a.type=='browser'){
   body.innerHTML='<div class="urlbar"><input value="https://wikipedia.org"><button>Go</button></div><div style="position:absolute;inset:40px 0 0 0"><iframe></iframe></div>';
   const i=body.querySelector('input'),f=body.querySelector('iframe'),go=()=>{let u=i.value.trim();if(!/^https?:/.test(u))u='https://'+u;f.src=u};
@@ -93,14 +197,14 @@ function open(a){
  const W=Math.min(a.w||420,innerWidth-20),H=Math.min(a.h||340,innerHeight-80);
  w.style.cssText='width:'+W+'px;height:'+H+'px;left:'+Math.max(0,Math.min(innerWidth-W,10+n%5*28))+'px;top:'+(10+n%5*28)+'px';n++;
  w.innerHTML='<div class="tb"><span class="t">'+a.ic+' '+a.name+'</span><button class="m">─</button><button class="M">▢</button><button class="x">✕</button></div><div class="body"></div><div class="rs"></div>';
- const body=w.querySelector('.body');content(a,body);desk.appendChild(w);
+ const body=w.querySelector('.body');const cleanup=content(a,body);desk.appendChild(w);
  const task=document.createElement('div');task.className='task';task.textContent=a.ic+' '+a.name;tasks.appendChild(task);
  const o={w,task,a};wins[a.id]=o;
  w.addEventListener('pointerdown',()=>focus(o));
  task.onclick=()=>{if(w.style.display=='none'||!task.classList.contains('on'))show(o);else{w.style.display='none';task.classList.remove('on')}};
  w.querySelector('.m').onclick=()=>{w.style.display='none';task.classList.remove('on')};
  w.querySelector('.M').onclick=()=>w.classList.toggle('max');
- w.querySelector('.x').onclick=()=>{w.remove();task.remove();delete wins[a.id]};
+ w.querySelector('.x').onclick=()=>{if(typeof cleanup=='function')cleanup();w.remove();task.remove();delete wins[a.id]};
  w.querySelector('.tb').ondblclick=()=>w.classList.toggle('max');
  drag(w,w.querySelector('.tb'),false);drag(w,w.querySelector('.rs'),true);
  focus(o);
