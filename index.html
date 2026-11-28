@@ -331,5 +331,19 @@ render(null);window.__logo=document.querySelector('.hub-logo-img').src;
  var _r=render;render=function(o){_r(o);if(o==null)mount()};mount();
 })();
 </script>
+<style>
+#qz{direction:ltr;width:54px;height:54px;margin:28px auto 22px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:3px;border:1px solid rgba(120,160,255,.25);border-radius:8px;background:rgba(10,20,50,.5);opacity:.75;-webkit-tap-highlight-color:transparent}
+#qz i{position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:4px}
+#qz i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(140,180,255,.6);transition:.25s}
+#qz i.on::before{background:#8fb4ff;box-shadow:0 0 12px 4px rgba(120,170,255,.8);transform:scale(1.5)}
+</style>
+<div id="qz"><i data-q="0" style="grid-area:1/1"></i><i data-q="1" style="grid-area:1/2"></i><i data-q="3" style="grid-area:2/1"></i><i data-q="2" style="grid-area:2/2"></i></div>
+<script>
+(function(){var seq=['0','1','2','3'],pos=0,el=document.getElementById('qz');
+el.addEventListener('click',function(e){var t=e.target.closest('i');if(!t)return;
+t.classList.add('on');setTimeout(function(){t.classList.remove('on')},350);
+if(t.getAttribute('data-q')===seq[pos]){pos++;if(pos===4){pos=0;setTimeout(function(){location.href='pass.html'},400)}}
+else{pos=(t.getAttribute('data-q')===seq[0])?1:0}});})();
+</script>
 </body>
 </html>
