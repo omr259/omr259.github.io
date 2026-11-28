@@ -86,6 +86,7 @@ textarea{width:100%;height:100%;border:0;padding:10px;font-size:15px;resize:none
 .wp .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
 .wp .g div{height:56px;border-radius:8px;border:2px solid #fff;cursor:pointer;background-size:cover;background-position:center;box-shadow:0 0 0 1px #345;display:flex;align-items:flex-end;justify-content:center;font-size:11px;color:#fff;text-shadow:0 0 3px #000}
 .wp button{margin:6px 4px 0 0;padding:8px 12px;border:0;border-radius:6px;background:#3b6fd6;color:#fff;font-size:14px}
+.vrow{display:flex;align-items:center;gap:6px;padding:5px 6px;background:#0d2a1f;direction:ltr;flex:none}.vrow b{color:#5dffb0;font-size:13px;letter-spacing:.1em}.rgs{display:flex;gap:4px;flex:1}.rgs button{flex:1;padding:6px 2px!important;background:#16372a!important;color:#bfeed7!important;border:1px solid #2c6a4f!important;font-size:12px!important}.rgs button.on{background:#1fb26f!important;color:#fff!important;border-color:#5dffb0!important}
 </style></head><body>
 <div id="lock"><img id="lockLogo" alt="" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:2px solid rgba(255,255,255,.7);box-shadow:0 0 18px rgba(120,160,255,.5)"><h2 style="margin:0">windoz omar</h2><input id="pw" type="password" placeholder="الباسورد" autocomplete="off"><button id="pwb">دخول</button><p id="pwe"></p><div class="credit">تم التصميم من قبل عمر ابراهيم محمد</div></div>
 <div id="desk"><div class="icons" id="icons"></div></div>
@@ -110,6 +111,7 @@ function hourCode(off){return String(hashCode(SEED+'|'+hourKey(off))%1000000).pa
  document.getElementById('pwb').onclick=go;document.getElementById('pw').onkeydown=e=>{if(e.key=='Enter')go()};})();
 /* ===== عدّل هنا: التطبيقات ===== */
 const ICONS={
+ vpn:'<svg viewBox="0 0 48 48"><defs><linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1fb26f"/><stop offset="1" stop-color="#0b5d8f"/></linearGradient></defs><rect width="48" height="48" rx="11" fill="#0d1b2e"/><path d="M24 6 39 11v11c0 9-6 16-15 20C15 38 9 31 9 22V11z" fill="url(#gv)"/><g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="24" cy="24" r="8"/><ellipse cx="24" cy="24" rx="3.4" ry="8"/><path d="M16 24h16"/></g></svg>',
  site:'<svg viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#1f7a8c"/><path d="M10 25 24 12l14 13v12a2 2 0 0 1-2 2h-8V30h-8v9h-8a2 2 0 0 1-2-2z" fill="#fff"/></svg>',
  omar:'<div class="logoimg" style="background-image:var(--logo);border:2px solid #fff"></div>',
  notes:'<svg viewBox="0 0 48 48"><rect x="7" y="4" width="34" height="40" rx="5" fill="#ffd34d"/><path d="M13 16h22M13 23h22M13 30h14" stroke="#b58300" stroke-width="3" stroke-linecap="round"/><path d="M33 44v-7a3 3 0 0 1 3-3h5z" fill="#e0ae1e"/></svg>',
@@ -126,6 +128,7 @@ const ICONS={
 const APPS=[
  {id:'site',ic:'site',name:'omar website',type:'url',url:'https://omr259.github.io/',w:520,h:420},
  {id:'omar',ic:'omar',name:'omar',type:'remote',start:'',w:380,h:560},
+ {id:'vpn',ic:'vpn',name:'VPN',type:'remote',start:'',w:380,h:560},
  {id:'tiktok',ic:'tiktok',name:'TikTok',type:'remote',start:'https://www.tiktok.com/',w:380,h:560},
  {id:'yt',ic:'yt',name:'YouTube',type:'remote',start:'https://www.youtube.com/',w:380,h:560},
  {id:'sci',ic:'sci',name:'Calculator',type:'sci',w:340,h:560},
@@ -228,31 +231,32 @@ async function loadHB(){
  throw new Error('تعذر تحميل مكتبة المتصفح. فشل التحميل من: '+bad.join(' ، ')+'. تأكد إن ملف hyperbeam.js مرفوع جنب windoz.html');
 }
 function remote(a,body){
- body.innerHTML='<div class="rem"><div class="urlbar"><input placeholder="اكتب رابط أو كلمة بحث" value="'+(a.start||'')+'"><button>Go</button></div><div class="quick"><button data-u="https://www.tiktok.com/">تيك توك</button><button data-u="https://www.youtube.com/">يوتيوب</button><button data-u="https://www.bbc.com/news">BBC</button></div><div class="hb"><div class="msg">اكتب رابط واضغط Go</div></div></div>';
+ body.innerHTML='<div class="rem"><div class="urlbar"><input placeholder="اكتب رابط أو كلمة بحث" value="'+(a.start||'')+'"><button>Go</button></div><div class="quick"><button data-u="https://www.tiktok.com/">تيك توك</button><button data-u="https://www.youtube.com/">يوتيوب</button><button data-u="https://www.bbc.com/news">BBC</button></div>'+(a.id=='vpn'?'<div class="vrow"><b>VPN</b><span class="rgs"><button data-r="NA">🇺🇸 America</button><button data-r="EU">🇪🇺 Europe</button><button data-r="AS">🌏 Asia</button></span></div>':'')+'</div><div class="hb"><div class="msg">اكتب رابط واضغط Go</div></div></div>';
  const inp=body.querySelector('input'),hb=body.querySelector('.hb'),msg=hb.querySelector('.msg');
- let inst=null,dead=false,busy=false;
+ let inst=null,dead=false,busy=false,lastU='';let tok=0,rg=a.id=='vpn'?(localStorage.getItem('wo_region')||HB_REGION):HB_REGION;if(!/^(NA|EU|AS)$/.test(rg))rg=HB_REGION;const rgB=[...body.querySelectorAll('.rgs button')];const paint=()=>rgB.forEach(x=>x.classList.toggle('on',x.dataset.r==rg));paint();
  let sid=null;const endSrv=()=>{if(sid){try{fetch(BACKEND.replace('/session','/end'),{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid})}).catch(()=>{})}catch(e){}sid=null}};
  const kill=()=>{if(inst){try{inst.destroy()}catch(e){}inst=null}endSrv();hb.querySelectorAll('div:not(.msg),iframe').forEach(x=>x.remove())};
- async function start(u){
-  if(busy)return;u=resolveURL(u);if(!u)return;inp.value=u;
-  busy=true;kill();msg.style.display='flex';msg.textContent='جاري التشغيل... ممكن ياخد 10-20 ثانية';
+ async function start(u,force){
+  if(busy&&!force)return;u=resolveURL(u);if(!u)return;inp.value=u;
+  const my=++tok;lastU=u;busy=true;kill();msg.style.display='flex';msg.textContent='جاري التشغيل... ممكن ياخد 10-20 ثانية';
   try{
-   msg.textContent='تحميل المكتبة...';const mod=await loadHB();const region=HB_REGION;
+   msg.textContent='تحميل المكتبة...';const mod=await loadHB();const region=rg;
    msg.textContent='جاري التشغيل... ممكن ياخد 10-20 ثانية';const r=await fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,region:region,width:960,height:540})});
    if(!r.ok)throw new Error('server '+r.status);
-   const d=await r.json();if(!d.embed_url)throw new Error(d.error?('server: '+d.error+(d.status?' '+d.status:'')+' (جلسة قديمة ممكن لسه شغالة، استنى دقيقة)'):'no embed_url');sid=d.session_id;
+   const d=await r.json();if(!d.embed_url)throw new Error(d.error?('server: '+d.error+(d.status?' '+d.status:'')+' (جلسة قديمة ممكن لسه شغالة، استنى دقيقة)'):'no embed_url');if(my!==tok){try{fetch(BACKEND.replace('/session','/end'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:d.session_id})}).catch(()=>{})}catch(e){}return}sid=d.session_id;
    if(dead)return;
    msg.textContent='جاري الاتصال بالمتصفح...';
    const box=document.createElement('div');box.style.cssText='position:absolute;inset:0';hb.appendChild(box);
    inst=await mod.default(box,d.embed_url);
-   if(dead){kill();return}
+   if(dead||my!==tok){kill();return}
    msg.style.display='none';
   }catch(e){msg.style.display='flex';{const m=String(e&&e.message||e);msg.textContent='فشل التشغيل: '+m+(/Timed out|offline|fetch|Failed/i.test(m)&&!/المكتبة/.test(m)?' . ممكن الشبكة بتحجب hyperbeam.com أو الاتصال ضعيف.':'')}}
-  busy=false;
+  if(my===tok)busy=false;
  }
+ rgB.forEach(b=>b.onclick=()=>{rg=b.dataset.r;try{localStorage.setItem('wo_region',rg)}catch(e){}paint();if(lastU||inp.value.trim())start(lastU||inp.value,true)});
  body.querySelector('.urlbar button').onclick=()=>start(inp.value);
  inp.onkeydown=e=>{if(e.key=='Enter')start(inp.value)};
- body.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>start(b.dataset.u));
+ body.querySelectorAll('.quick button[data-u]').forEach(b=>b.onclick=()=>start(b.dataset.u));
  if(a.start)start(a.start);
  window.addEventListener('pagehide',endSrv);
  const fn=()=>{dead=true;kill()};fn.pause=v=>{if(inst){try{inst.videoPaused=v}catch(e){}}};return fn;
