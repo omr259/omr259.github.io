@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Desktop</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -42,15 +42,15 @@ textarea{width:100%;height:100%;border:0;padding:10px;font-size:15px;resize:none
 .rem .hb>.msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;z-index:1;pointer-events:none}
 .rem .quick{display:flex;gap:4px;padding:4px;background:#eef;flex:none;direction:rtl}
 .rem .quick button,.urlbar button{padding:5px 10px;border:0;border-radius:5px;background:#3b6fd6;color:#fff;font-size:13px}
-.sci{display:flex;flex-direction:column;height:100%;background:#2a2d31;padding:6px;gap:6px;direction:ltr;overflow:auto}
-.sci .scr{background:#c7d3b4;border:3px solid #111;border-radius:6px;padding:6px 8px;font-family:monospace;color:#111;min-height:96px}
-.sci .ex{font-size:16px;min-height:22px;word-break:break-all;text-align:left}
-.sci .rs2{font-size:26px;text-align:right;font-weight:700;min-height:34px;word-break:break-all}
-.sci .rr{display:flex;gap:4px;font-size:11px}
+.sci{display:flex;flex-direction:column;height:100%;background:#2a2d31;padding:6px;gap:6px;direction:ltr;overflow:hidden}
+.sci .scr{flex:none;background:#c7d3b4;border:3px solid #111;border-radius:6px;padding:4px 8px;font-family:monospace;color:#111}
+.sci .ex{font-size:14px;min-height:20px;word-break:break-all;text-align:left}
+.sci .rs2{font-size:clamp(18px,4.2vmin,28px);text-align:right;font-weight:700;min-height:30px;word-break:break-all}
+.sci .rr{display:flex;gap:4px;font-size:11px;min-height:34px}
 .sci .rr div{flex:1;text-align:center;border-top:1px solid #556;padding-top:2px}
 .sci .rr b{display:block;font-size:15px}
-.sci .ky{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;flex:1}
-.sci .ky button{border:0;border-radius:6px;font-size:15px;padding:8px 0;min-height:36px;background:#4a4f57;color:#fff}
+.sci .ky{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(8,minmax(0,1fr));gap:4px;flex:1;min-height:0}
+.sci .ky button{border:0;border-radius:6px;font-size:clamp(11px,2.6vmin,18px);padding:0;min-height:0;min-width:0;touch-action:manipulation;background:#4a4f57;color:#fff}
 .sci .ky button.n{background:#e7e7e7;color:#111;font-weight:700}
 .sci .ky button.o{background:#6a7078}
 .sci .ky button.ac{background:#d33;color:#fff}
@@ -97,26 +97,44 @@ function tick(){document.getElementById('clock').textContent=new Date().toLocale
 
 /* ===== المتصفح الحقيقي (Hyperbeam عن طريق السيرفر بتاعك) ===== */
 const BACKEND='https://windoz-backend.ibrahim2020-gi.workers.dev/session';
+const SITES={'تيك توك':'https://www.tiktok.com/','تيكتوك':'https://www.tiktok.com/','tiktok':'https://www.tiktok.com/','tik tok':'https://www.tiktok.com/','يوتيوب':'https://www.youtube.com/','youtube':'https://www.youtube.com/','جوجل':'https://www.google.com/','google':'https://www.google.com/','فيسبوك':'https://www.facebook.com/','فيس بوك':'https://www.facebook.com/','facebook':'https://www.facebook.com/','انستجرام':'https://www.instagram.com/','انستغرام':'https://www.instagram.com/','instagram':'https://www.instagram.com/','تويتر':'https://x.com/','twitter':'https://x.com/','x':'https://x.com/','واتساب':'https://web.whatsapp.com/','whatsapp':'https://web.whatsapp.com/','ويكيبيديا':'https://www.wikipedia.org/','wikipedia':'https://www.wikipedia.org/','bbc':'https://www.bbc.com/news','بي بي سي':'https://www.bbc.com/news','نتفلكس':'https://www.netflix.com/','netflix':'https://www.netflix.com/','ريديت':'https://www.reddit.com/','reddit':'https://www.reddit.com/','تيليجرام':'https://web.telegram.org/','telegram':'https://web.telegram.org/','تويتش':'https://www.twitch.tv/','twitch':'https://www.twitch.tv/'};
+function resolveURL(q){
+ q=(q||'').trim();if(!q)return '';
+ const k=q.toLowerCase().replace(/\s+/g,' ');
+ if(SITES[k])return SITES[k];
+ if(/^https?:\/\//i.test(q))return q;
+ if(!/\s/.test(q)&&/^([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?([\/?#].*)?$/i.test(q))return 'https://'+q;
+ if(/^localhost(:\d+)?([\/?#].*)?$/i.test(q))return 'http://'+q;
+ return 'https://www.google.com/search?q='+encodeURIComponent(q);
+}
+let HBMOD=null;
+async function loadHB(){
+ if(HBMOD)return HBMOD;
+ const srcs=[new URL('hyperbeam.js',location.href).href,'https://cdn.jsdelivr.net/npm/@hyperbeam/web@0.0.39/dist/index.js','https://esm.sh/@hyperbeam/web@0.0.39','https://unpkg.com/@hyperbeam/web@0.0.39/dist/index.js'];
+ const bad=[];
+ for(const u of srcs){try{HBMOD=await import(u);return HBMOD}catch(e){bad.push(new URL(u).hostname)}}
+ throw new Error('تعذر تحميل مكتبة المتصفح. فشل التحميل من: '+bad.join(' ، ')+'. تأكد إن ملف hyperbeam.js مرفوع جنب windoz.html');
+}
 function remote(a,body){
- body.innerHTML='<div class="rem"><div class="urlbar"><input placeholder="https://..." value="'+(a.start||'')+'"><button>Go</button></div><div class="quick"><button data-u="https://www.tiktok.com/">تيك توك</button><button data-u="https://www.youtube.com/">يوتيوب</button><button data-u="https://www.bbc.com/news">BBC</button></div><div class="hb"><div class="msg">اكتب رابط واضغط Go</div></div></div>';
+ body.innerHTML='<div class="rem"><div class="urlbar"><input placeholder="اكتب رابط أو كلمة بحث" value="'+(a.start||'')+'"><button>Go</button></div><div class="quick"><button data-u="https://www.tiktok.com/">تيك توك</button><button data-u="https://www.youtube.com/">يوتيوب</button><button data-u="https://www.bbc.com/news">BBC</button></div><div class="hb"><div class="msg">اكتب رابط واضغط Go</div></div></div>';
  const inp=body.querySelector('input'),hb=body.querySelector('.hb'),msg=hb.querySelector('.msg');
  let inst=null,dead=false,busy=false;
  let sid=null;const endSrv=()=>{if(sid){try{fetch(BACKEND.replace('/session','/end'),{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid})}).catch(()=>{})}catch(e){}sid=null}};
  const kill=()=>{if(inst){try{inst.destroy()}catch(e){}inst=null}endSrv();hb.querySelectorAll('div:not(.msg),iframe').forEach(x=>x.remove())};
  async function start(u){
-  if(busy)return;u=(u||'').trim();if(!u)return;if(!/^https?:/.test(u))u='https://'+u;inp.value=u;
+  if(busy)return;u=resolveURL(u);if(!u)return;inp.value=u;
   busy=true;kill();msg.style.display='flex';msg.textContent='جاري التشغيل... ممكن ياخد 10-20 ثانية';
   try{
    const r=await fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u})});
    if(!r.ok)throw new Error('server '+r.status);
    const d=await r.json();if(!d.embed_url)throw new Error(d.error?('server: '+d.error+(d.status?' '+d.status:'')+' (جلسة قديمة ممكن لسه شغالة، استنى دقيقة)'):'no embed_url');sid=d.session_id;
    if(dead)return;
-   const mod=await import('https://unpkg.com/@hyperbeam/web@latest/dist/index.js');
+   msg.textContent='تحميل المكتبة...';const mod=await loadHB();msg.textContent='جاري الاتصال بالمتصفح...';
    const box=document.createElement('div');box.style.cssText='position:absolute;inset:0';hb.appendChild(box);
    inst=await mod.default(box,d.embed_url);
    if(dead){kill();return}
    msg.style.display='none';
-  }catch(e){msg.style.display='flex';msg.textContent='فشل التشغيل: '+(e&&e.message||e)+' (تأكد إن الموقع مفتوح من omr259.github.io)'}
+  }catch(e){msg.style.display='flex';{const m=String(e&&e.message||e);msg.textContent='فشل التشغيل: '+m+(/Timed out|offline|fetch|Failed/i.test(m)&&!/المكتبة/.test(m)?' . ممكن الشبكة بتحجب hyperbeam.com أو الاتصال ضعيف.':'')}}
   busy=false;
  }
  body.querySelector('.urlbar button').onclick=()=>start(inp.value);
@@ -143,7 +161,8 @@ function sci(body){
   ['0','n','0'],['.','n','.'],['±','o','NEG'],['+','o','+'],['=','eq','=']
  ];
  function calc(){
-  let t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,'(Math.PI)').replace(/Ans/g,'('+ans+')');
+  let src=s;{let o=0;for(const ch of src){if(ch=='(')o++;else if(ch==')')o--}while(o-->0)src+=')'}
+  let t=src.replace(/×/g,'*').replace(/÷/g,'/').replace(/π/g,'(Math.PI)').replace(/Ans/g,'('+ans+')');
   t=t.replace(/(\d)e\+/g,'$1e+');
   t=t.replace(/(\d+(?:\.\d+)?|\))%/g,'($1/100)');
   t=t.replace(/(\d+(?:\.\d+)?)!/g,'F($1)');
@@ -151,11 +170,11 @@ function sci(body){
   t=t.replace(/√\(/g,'Q(').replace(/asin\(/g,'AS(').replace(/acos\(/g,'AC(').replace(/atan\(/g,'AT(').replace(/sin\(/g,'SN(').replace(/cos\(/g,'CS(').replace(/tan\(/g,'TN(').replace(/log\(/g,'LG(').replace(/ln\(/g,'LN(');
   t=t.replace(/(\d|\))(?=\(|[A-Z]{1,2}\()/g,'$1*').replace(/(\d|\))(?=e(?![+\d]))/g,'$1*');
   t=t.replace(/\be\b(?!\+)/g,'(Math.E)');
-  if(!/^[0-9+\-*/().eQASNCTLGFMathPIE\s]*$/.test(t))throw 0;
+  if(!/^[0-9+\-*/().eQASNCTLGFMathPIE\s]*$/.test(t))throw 'SYN';
   const r=deg?Math.PI/180:1;
   const f=Function('Q','AS','AC','AT','SN','CS','TN','LG','LN','F','"use strict";return ('+t+')');
-  const v=f(Math.sqrt,x=>Math.asin(x)/r,x=>Math.acos(x)/r,x=>Math.atan(x)/r,x=>{const q=Math.sin(x*r);return Math.abs(q)<1e-15?0:q},x=>{const q=Math.cos(x*r);return Math.abs(q)<1e-15?0:q},x=>Math.tan(x*r),Math.log10,Math.log,fact);
-  if(typeof v!='number'||!isFinite(v))throw 0;return v;
+  const v=f(Math.sqrt,x=>Math.asin(x)/r,x=>Math.acos(x)/r,x=>Math.atan(x)/r,x=>{const q=Math.sin(x*r);return Math.abs(q)<1e-15?0:q},x=>{const q=Math.cos(x*r);return Math.abs(q)<1e-15?0:q},x=>{if(deg&&Math.abs(((x%180)+180)%180-90)<1e-9)throw 'UND';return Math.tan(x*r)},Math.log10,Math.log,fact);
+  if(typeof v!='number'||!isFinite(v))throw (/÷\s*0(?![.\d])/.test(s)?'DIV':'UND');return v;
  }
  function rnd(v,d){const m=Math.pow(10,d);return (Math.round((v+Math.sign(v)*1e-12)*m)/m).toFixed(d)}
  function show(v){
@@ -172,7 +191,7 @@ function sci(body){
   if(v=='DEL'){s=s.replace(/(asin\(|acos\(|atan\(|sin\(|cos\(|tan\(|log\(|ln\(|√\(|Ans|.)$/,'');ex.textContent=s;return}
   if(v=='NEG'){s=s.startsWith('-')?s.slice(1):'-'+s;ex.textContent=s;return}
   if(v=='='){
-   try{const raw=calc();ans=raw;const r=parseFloat(raw.toPrecision(12));ex.textContent=s+' =';show(r);shown=true}catch(e){rs.textContent='خطأ';rr.innerHTML='';shown=false}
+   try{const raw=calc();ans=raw;const r=parseFloat(raw.toPrecision(12));ex.textContent=s+' =';show(r);shown=true}catch(e){rs.textContent=e=='DIV'?'خطأ: القسمة على صفر':e=='UND'?'خطأ: غير معرّف':'خطأ: تعبير غير صحيح';ex.textContent=s;rr.innerHTML='';shown=false}
    return}
   s+=v;ex.textContent=s;
  };ky.appendChild(b)});
@@ -191,11 +210,15 @@ function content(a,body){
   const p=document.createElement('div');p.className='pad';p.style.cssText='position:absolute;bottom:6px;left:6px;right:6px;font-size:11px;color:#777;background:#fffd;pointer-events:none';p.textContent='بعض المواقع (زي BBC) بتمنع الفتح هنا. دي حماية من الموقع نفسه.';body.appendChild(p);
  }
 }
+const VW=()=>document.documentElement.clientWidth||innerWidth,VH=()=>(document.documentElement.clientHeight||innerHeight)-44;
+function clampWin(w){if(w.classList.contains('max'))return;const W=Math.min(w.offsetWidth,VW()-8),H=Math.min(w.offsetHeight,VH()-8);w.style.width=W+'px';w.style.height=H+'px';w.style.left=Math.max(0,Math.min(VW()-W,w.offsetLeft))+'px';w.style.top=Math.max(0,Math.min(VH()-H,w.offsetTop))+'px'}
+function clampAll(){Object.values(wins).forEach(o=>clampWin(o.w))}
+addEventListener('resize',clampAll);addEventListener('orientationchange',()=>setTimeout(clampAll,300));if(window.visualViewport)visualViewport.addEventListener('resize',clampAll);
 function open(a){
  if(wins[a.id]&&a.single!==false){show(wins[a.id]);return}
  const w=document.createElement('div');w.className='win';
- const W=Math.min(a.w||420,innerWidth-20),H=Math.min(a.h||340,innerHeight-80);
- w.style.cssText='width:'+W+'px;height:'+H+'px;left:'+Math.max(0,Math.min(innerWidth-W,10+n%5*28))+'px;top:'+(10+n%5*28)+'px';n++;
+ const W=Math.min(a.w||420,VW()-8),H=Math.min(a.h||340,VH()-8);
+ w.style.cssText='width:'+W+'px;height:'+H+'px;left:'+Math.max(0,Math.min(VW()-W,10+n%5*28))+'px;top:'+Math.max(0,Math.min(VH()-H,10+n%5*28))+'px';n++;
  w.innerHTML='<div class="tb"><span class="t">'+a.ic+' '+a.name+'</span><button class="m">─</button><button class="M">▢</button><button class="x">✕</button></div><div class="body"></div><div class="rs"></div>';
  const body=w.querySelector('.body');const cleanup=content(a,body);desk.appendChild(w);
  const task=document.createElement('div');task.className='task';task.textContent=a.ic+' '+a.name;tasks.appendChild(task);
@@ -203,10 +226,11 @@ function open(a){
  w.addEventListener('pointerdown',()=>focus(o));
  task.onclick=()=>{if(w.style.display=='none'||!task.classList.contains('on'))show(o);else{w.style.display='none';task.classList.remove('on')}};
  w.querySelector('.m').onclick=()=>{w.style.display='none';task.classList.remove('on')};
- w.querySelector('.M').onclick=()=>w.classList.toggle('max');
+ w.querySelector('.M').onclick=()=>{w.classList.toggle('max');clampWin(w)};
  w.querySelector('.x').onclick=()=>{if(typeof cleanup=='function')cleanup();w.remove();task.remove();delete wins[a.id]};
  w.querySelector('.tb').ondblclick=()=>w.classList.toggle('max');
  drag(w,w.querySelector('.tb'),false);drag(w,w.querySelector('.rs'),true);
+ if(VW()<600||VH()<480)w.classList.add('max');
  focus(o);
 }
 function show(o){o.w.style.display='flex';focus(o)}
@@ -219,7 +243,7 @@ function drag(w,h,resize){
   w.querySelectorAll('iframe').forEach(f=>f.style.pointerEvents='none');
   const mv=ev=>{const dx=ev.clientX-sx,dy=ev.clientY-sy;
    if(resize){w.style.width=Math.max(220,W-dx)+'px';w.style.left=Math.min(L+W-220,L+dx)+'px';w.style.height=Math.max(140,H+dy)+'px'}
-   else{w.style.left=Math.max(-W+60,Math.min(innerWidth-60,L+dx))+'px';w.style.top=Math.max(0,Math.min(desk.offsetHeight-36,T+dy))+'px'}};
+   else{w.style.left=Math.max(-W+80,Math.min(VW()-80,L+dx))+'px';w.style.top=Math.max(0,Math.min(VH()-36,T+dy))+'px'}};
   const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);w.querySelectorAll('iframe').forEach(f=>f.style.pointerEvents='')};
   h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);
  });
