@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VPN</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0a0f1c;color:#e8eefc;font-family:'Segoe UI',Tahoma,Arial,sans-serif}
+body{display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #1d2a48;flex:none}
+.top h1{margin:0;font-size:20px;letter-spacing:.1em}.top a{margin-inline-start:auto;color:#8fb4ff;text-decoration:none;font-size:14px}
+.rg{direction:ltr;display:flex;gap:8px;padding:10px 12px;flex:none}
+.rg button{flex:1;padding:12px 4px;border-radius:12px;border:1px solid #2a3c66;background:#121c36;color:#cfe0ff;font-size:16px;font-weight:600}
+.rg button.on{background:#3b6fd6;border-color:#6aa3ff;color:#fff}
+.bar{display:flex;gap:6px;padding:0 12px 10px;direction:ltr;flex:none}
+.bar input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #2a3c66;background:#0f1730;color:#fff;font-size:15px}
+.bar button{padding:10px 16px;border:0;border-radius:10px;background:#3b6fd6;color:#fff;font-size:15px}
+.hb{flex:1;position:relative;min-height:0;background:#000;color:#9fb0d4}
+.msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;pointer-events:none;z-index:1}
+</style></head><body>
+<div class="top"><h1>VPN</h1><a href="index.html">رجوع</a></div>
+<div class="rg"><button data-r="NA">America</button><button data-r="EU" class="on">Europe</button><button data-r="AS">Asia</button></div>
+<div class="bar"><input id="u" placeholder="Search or type URL" autocapitalize="off" autocorrect="off"><button id="go">Go</button></div>
+<div class="hb" id="hb"><div class="msg" id="msg">اختار الدولة واكتب رابط واضغط Go</div></div>
+<script>
+const BACKEND='https://windoz-backend.ibrahim2020-gi.workers.dev/session';
+let rg='EU',inst=null,sid=null,busy=false,lastU='';
+const $=id=>document.getElementById(id),hb=$('hb'),msg=$('msg'),inp=$('u');
+function resolveURL(q){q=(q||'').trim();if(!q)return '';
+ if(/^https?:\/\//i.test(q))return q;
+ if(!/\s/.test(q)&&/^([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?([\/?#].*)?$/i.test(q))return 'https://'+q;
+ return 'https://www.google.com/search?q='+encodeURIComponent(q)}
+let HBMOD=null;
+async function loadHB(){if(HBMOD)return HBMOD;
+ const srcs=[new URL('hyperbeam.js',location.href).href,'https://cdn.jsdelivr.net/npm/@hyperbeam/web@0.0.39/dist/index.js','https://esm.sh/@hyperbeam/web@0.0.39'];
+ for(const u of srcs){try{HBMOD=await import(u);return HBMOD}catch(e){}}
+ throw new Error('تعذر تحميل مكتبة المتصفح (hyperbeam.js)')}
+function endSrv(){if(sid){try{fetch(BACKEND.replace('/session','/end'),{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sid})}).catch(()=>{})}catch(e){}sid=null}}
+function kill(){if(inst){try{inst.destroy()}catch(e){}inst=null}endSrv();hb.querySelectorAll('div:not(.msg),iframe').forEach(x=>x.remove())}
+let token=0;
+async function start(u){
+ u=resolveURL(u);if(!u)return;inp.value=u;lastU=u;const my=++token;
+ kill();msg.style.display='flex';msg.textContent='جاري التشغيل ('+rg+')... ممكن ياخد 10-20 ثانية';
+ try{
+  const mod=await loadHB();
+  const r=await fetch(BACKEND,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,region:rg,width:960,height:540})});
+  if(!r.ok)throw new Error('server '+r.status);
+  const d=await r.json();if(!d.embed_url)throw new Error(d.error||'no embed_url');
+  if(my!==token){fetch(BACKEND.replace('/session','/end'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:d.session_id})}).catch(()=>{});return}
+  sid=d.session_id;
+  const box=document.createElement('div');box.style.cssText='position:absolute;inset:0';hb.appendChild(box);
+  inst=await mod.default(box,d.embed_url);
+  if(my!==token){kill();return}
+  msg.style.display='none';
+ }catch(e){if(my===token){msg.style.display='flex';msg.textContent='فشل التشغيل: '+String(e&&e.message||e)}}
+}
+document.querySelectorAll('.rg button').forEach(b=>b.onclick=()=>{
+ rg=b.dataset.r;document.querySelectorAll('.rg button').forEach(x=>x.classList.toggle('on',x===b));
+ if(lastU||inp.value.trim())start(lastU||inp.value)});
+$('go').onclick=()=>start(inp.value);inp.onkeydown=e=>{if(e.key=='Enter')start(inp.value)};
+window.addEventListener('pagehide',endSrv);
+</script></body></html>
