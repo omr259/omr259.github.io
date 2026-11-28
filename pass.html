@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Code</title>
+<style>
+html,body{margin:0;height:100%;background:radial-gradient(circle at 50% 30%,#1b3a73,#050b18);color:#fff;font-family:'Segoe UI',Tahoma,Arial,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center}
+.card{padding:28px 34px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);max-width:90vw}
+h2{margin:0 0 6px;font-weight:600;font-size:20px;color:#cfe0ff}
+#code{font-family:ui-monospace,Consolas,monospace;font-size:clamp(40px,14vw,76px);letter-spacing:.14em;margin:14px 0 10px;font-weight:700;direction:ltr;color:#fff}
+#t{color:#9fb6e0;font-size:15px}.bar{height:5px;background:rgba(255,255,255,.15);border-radius:3px;margin-top:12px;overflow:hidden}.bar i{display:block;height:100%;background:#6aa3ff;width:100%}
+small{display:block;margin-top:14px;color:#8aa0c8}
+</style></head><body><div class="card"><h2>كود الدخول لـ windoz omar</h2><div id="code">------</div><div id="t"></div><div class="bar"><i id="b"></i></div><small>الكود بيتغير كل ساعة (بتوقيت القاهرة)</small></div>
+<script>
+/* ===== كود الساعة (نفس الدالة في windoz.html و pass.html) ===== */
+const SEED='omar-windoz-7Q4xK92z';
+function hourKey(off){const d=new Date(Date.now()+(off||0)*3600000);const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Cairo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hour12:false}).formatToParts(d).reduce((o,x)=>(o[x.type]=x.value,o),{});return p.year+'-'+p.month+'-'+p.day+'-'+(p.hour=='24'?'00':p.hour)}
+function hashCode(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (4294967296*(2097151&h2)+(h1>>>0))}
+function hourCode(off){return String(hashCode(SEED+'|'+hourKey(off))%1000000).padStart(6,'0')}
+
+function tick(){document.getElementById('code').textContent=hourCode(0);
+ const n=new Date(),p=new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Cairo',minute:'2-digit',second:'2-digit'}).formatToParts(n).reduce((o,x)=>(o[x.type]=x.value,o),{});
+ const left=3600-(parseInt(p.minute)*60+parseInt(p.second));
+ document.getElementById('t').textContent='يتغير بعد '+Math.floor(left/60)+' دقيقة و '+(left%60)+' ثانية';
+ document.getElementById('b').style.width=(left/36)+'%'}
+tick();setInterval(tick,1000);
+</script></body></html>
