@@ -332,18 +332,23 @@ render(null);window.__logo=document.querySelector('.hub-logo-img').src;
 })();
 </script>
 <style>
-#qz{direction:ltr;width:54px;height:54px;margin:28px auto 22px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:3px;border:1px solid rgba(120,160,255,.25);border-radius:8px;background:rgba(10,20,50,.5);opacity:.75;-webkit-tap-highlight-color:transparent}
-#qz i{position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:4px}
-#qz i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(140,180,255,.6);transition:.25s}
-#qz i.on::before{background:#8fb4ff;box-shadow:0 0 12px 4px rgba(120,170,255,.8);transform:scale(1.5)}
+#qz{direction:ltr;width:min(70vw,280px);aspect-ratio:1/1;margin:30px auto 26px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;padding:12px;border:1px solid rgba(120,160,255,.22);border-radius:20px;background:rgba(10,20,50,.45);opacity:.85;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#qz i{--c:#8fb4ff;position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:14px;background:rgba(120,160,255,.05)}
+#qz i[data-q="0"]{--c:#ff6b9a}#qz i[data-q="1"]{--c:#ffd24a}#qz i[data-q="2"]{--c:#4af0b0}#qz i[data-q="3"]{--c:#7aa8ff}
+#qz i::before{content:"";width:56%;aspect-ratio:1/1;border-radius:50%;border:2px solid var(--c);opacity:.6;transition:.2s}
+#qz i::after{content:"";position:absolute;width:56%;aspect-ratio:1/1;border-radius:50%;border:3px solid var(--c);opacity:0;pointer-events:none}
+#qz i.on::before{background:var(--c);opacity:1;box-shadow:0 0 26px 10px var(--c);transform:scale(1.1)}
+#qz i.on::after{animation:qzr .6s ease-out}
+@keyframes qzr{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.2)}}
 </style>
 <div id="qz"><i data-q="0" style="grid-area:1/1"></i><i data-q="1" style="grid-area:1/2"></i><i data-q="3" style="grid-area:2/1"></i><i data-q="2" style="grid-area:2/2"></i></div>
 <script>
-(function(){var seq=['0','1','2','3'],pos=0,el=document.getElementById('qz');
+(function(){var S={'1032':'pass.html','1023':'vpn.html'},buf='',el=document.getElementById('qz');
+function ok(x){for(var k in S)if(k.indexOf(x)===0)return true;return false}
 el.addEventListener('click',function(e){var t=e.target.closest('i');if(!t)return;
-t.classList.add('on');setTimeout(function(){t.classList.remove('on')},350);
-if(t.getAttribute('data-q')===seq[pos]){pos++;if(pos===4){pos=0;setTimeout(function(){location.href='pass.html'},400)}}
-else{pos=(t.getAttribute('data-q')===seq[0])?1:0}});})();
+t.classList.add('on');setTimeout(function(){t.classList.remove('on')},500);
+var c=t.getAttribute('data-q');buf+=c;if(!ok(buf))buf=ok(c)?c:'';
+if(S[buf]){var u=S[buf];buf='';setTimeout(function(){location.href=u},400)}});})();
 </script>
 </body>
 </html>
